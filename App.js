@@ -1,12 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Global from './Global';
+import axios from 'axios';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
+  let url = Global.url;
+
+  const [message, setMessage] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`${url}/holaMundo`)
+      .then((response) => {
+        setMessage(response.data.message);
+      })
+      .catch((error) => {
+        setMessage(error.message);
+        console.error('Ha habido un error!', error);
+      });
+  }, [url, message]);
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text>{message}</Text>
+      <StatusBar style='auto' />
     </View>
   );
 }
