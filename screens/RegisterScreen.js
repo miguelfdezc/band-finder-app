@@ -10,10 +10,12 @@ import Title from '../components/Title';
 import CustomInput from '../components/Input';
 import CustomButton from '../components/Button';
 import { StatusBar } from 'expo-status-bar';
-import Global from '../Global';
+import Constants from 'expo-constants';
 import axios from 'axios';
 
 const RegisterScreen = ({ navigation }) => {
+  const API_BASE_PATH = Constants.manifest.extra.apiBasePath;
+
   const [usuario, setUsuario] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +38,7 @@ const RegisterScreen = ({ navigation }) => {
   const signUp = async () => {
     if (validateForm()) {
       await axios
-        .post(`${Global.url}/register/musicos`, { usuario, email, password })
+        .post(`${API_BASE_PATH}/register/musicos`, { usuario, email, password })
         .then(() => navigation.navigate('Inicio de sesión'))
         .catch((err) => alert(err));
     }

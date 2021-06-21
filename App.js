@@ -44,7 +44,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        //initialRouteName='Menu'
+        // initialRouteName='Perfil'
         screenOptions={globalScreenOptions}
       >
         <Stack.Screen
