@@ -18,7 +18,6 @@ const Stack = createStackNavigator();
 const globalScreenOptions = {
   headerStyle: { backgroundColor: 'white' },
   headerTitleStyle: { color: 'black' },
-  headerTintColor: { color: 'white' },
 };
 
 const fetchFonts = () => {
