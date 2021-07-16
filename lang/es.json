@@ -1,0 +1,36 @@
+{
+  "screenTitles": {
+    "login": "Inicio de sesión",
+    "register": "Registro",
+    "home": "Inicio",
+    "profile": "Perfil"
+  },
+  "menuOptions": {
+    "goBack": "Volver",
+    "signOut": "Cerrar sesión"
+  },
+  "loginScreen": {
+    "loginTitle": "Inicio de sesión",
+    "emailTitle": "email",
+    "emailExample": "usuario@email.com",
+    "passwordTitle": "contraseña",
+    "submitButton": "Iniciar sesión",
+    "ctaRegister": "¿Aún no tienes una cuenta?",
+    "redirectRegister": "Regístrate"
+  },
+  "registerScreen": {
+    "usernameTitle": "usuario",
+    "usernameExample": "usuario123",
+    "emailTitle": "email",
+    "emailExample": "usuario@email.com",
+    "passwordTitle": "contraseña",
+    "repeatPasswordTitle": "repetir contraseña",
+    "submitButton": "Registrarme",
+    "ctaLogin": "¿Ya tienes una cuenta?",
+    "redirectLogin": "Iniciar sesión"
+  },
+  "validations": {
+    "emptyFields": "Error: hay campos vacíos en el formulario",
+    "passwordRepeat": "Error: las contraseñas no coinciden"
+  }
+}

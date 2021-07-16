@@ -8,6 +8,7 @@ import Text from '../components/Text';
 import { Image } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
 import { auth } from '../config';
+import { t } from '../lang/IMLocalized';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        navigation.navigate('Home');
+        navigation.navigate(t('screenTitles.home'));
       }
     });
 
@@ -25,7 +26,7 @@ const LoginScreen = ({ navigation }) => {
 
   const validateForm = () => {
     if (!email || !password) {
-      alert('Error: faltan campos del formulario por rellenar');
+      alert(t('validations.emptyFields'));
       return false;
     }
     return true;
@@ -47,17 +48,17 @@ const LoginScreen = ({ navigation }) => {
         source={require('../assets/Playlist-pana.png')}
         style={{ width: 411, height: 305, borderRadius: 8 }}
       />
-      <Title>Inicio de sesión</Title>
+      <Title>{t('loginScreen.loginTitle')}</Title>
       <View style={styles.inputContainer}>
-        <Text>email</Text>
+        <Text>{t('loginScreen.emailTitle')}</Text>
         <CustomInput
-          placeholder='usuario@gmail.com'
+          placeholder={t('loginScreen.emailExample')}
           autoFocus
           type='email'
           value={email}
           onChangeText={(text) => setEmail(text)}
         />
-        <Text>contraseña</Text>
+        <Text>{t('loginScreen.passwordTitle')}</Text>
         <CustomInput
           placeholder='********'
           secureTextEntry
@@ -67,11 +68,11 @@ const LoginScreen = ({ navigation }) => {
           onSubmitEditing={signIn}
         />
       </View>
-      <CustomButton onPress={signIn} title='Iniciar sesión' />
-      <Text>¿Todavía no tienes una cuenta?</Text>
+      <CustomButton onPress={signIn} title={t('loginScreen.submitButton')} />
+      <Text>{t('loginScreen.ctaRegister')}</Text>
       <CustomButton
-        onPress={() => navigation.navigate('Regístrate')}
-        title='Registrarme'
+        onPress={() => navigation.navigate(t('screenTitles.register'))}
+        title={t('loginScreen.redirectRegister')}
       />
       <View style={{ height: 100 }} />
     </KeyboardAvoidingView>

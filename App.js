@@ -1,8 +1,9 @@
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
+
+import { t, init } from './lang/IMLocalized';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -28,6 +29,7 @@ const fetchFonts = () => {
 };
 
 export default function App() {
+  init();
   const [dataLoaded, setDataLoaded] = useState(false);
 
   if (!dataLoaded) {
@@ -47,26 +49,23 @@ export default function App() {
         screenOptions={globalScreenOptions}
       >
         <Stack.Screen
-          name='Inicio de sesión'
+          name={t('screenTitles.login')}
           component={LoginScreen}
         ></Stack.Screen>
         <Stack.Screen
-          name='Regístrate'
+          name={t('screenTitles.register')}
           component={RegisterScreen}
         ></Stack.Screen>
-        <Stack.Screen name='Home' component={HomeScreen}></Stack.Screen>
+        <Stack.Screen
+          name={t('screenTitles.home')}
+          component={HomeScreen}
+        ></Stack.Screen>
         <Stack.Screen name='Menu' component={MenuScreen}></Stack.Screen>
-        <Stack.Screen name='Perfil' component={PerfilScreen}></Stack.Screen>
+        <Stack.Screen
+          name={t('screenTitles.profile')}
+          component={PerfilScreen}
+        ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
