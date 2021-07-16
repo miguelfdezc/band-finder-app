@@ -2,25 +2,26 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { auth } from '../config';
+import { t } from '../lang/IMLocalized';
 
 const MenuScreen = ({ navigation }) => {
   const menuOptions = [
     {
-      title: 'Inicio',
-      onPress: () => navigation.navigate('Home'),
+      title: t('screenTitles.home'),
+      onPress: () => navigation.navigate(t('screenTitles.home')),
       icon: 'home-outline',
     },
     {
-      title: 'Perfil',
-      onPress: () => navigation.navigate('Perfil'),
+      title: t('screenTitles.profile'),
+      onPress: () => navigation.navigate(t('screenTitles.profile')),
       icon: 'person-outline',
     },
     {
-      title: 'Cerrar sesión',
+      title: t('menuOptions.signOut'),
       onPress: () =>
         auth
           .signOut()
-          .then(() => navigation.replace('Inicio de sesión'))
+          .then(() => navigation.replace(t('screenTitles.login')))
           .catch((error) => {
             alert(error.message);
           }),
@@ -32,7 +33,7 @@ const MenuScreen = ({ navigation }) => {
     <View style={styles.container}>
       <TouchableOpacity activeOpacity={0.6} onPress={() => navigation.goBack()}>
         <View style={styles.button}>
-          <Text style={styles.buttonText}>Volver</Text>
+          <Text style={styles.buttonText}>{t('menuOptions.goBack')}</Text>
         </View>
       </TouchableOpacity>
       <View style={styles.optionsContainer}>

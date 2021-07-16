@@ -4,6 +4,7 @@ export default {
   name: 'band-finder-app',
   version: '1.0.0',
   extra: {
+    apiBasePath: process.env.API_BASE_PATH,
     apiKey: process.env.API_KEY,
     authDomain: process.env.AUTH_DOMAIN,
     projectId: process.env.PROJECT_ID,

@@ -1,0 +1,36 @@
+{
+  "screenTitles": {
+    "login": "Sign In",
+    "register": "Sign Up",
+    "home": "Home",
+    "profile": "Profile"
+  },
+  "menuOptions": {
+    "goBack": "Go Back",
+    "signOut": "Sign Out"
+  },
+  "loginScreen": {
+    "loginTitle": "Sign In",
+    "emailTitle": "email",
+    "emailExample": "user@email.com",
+    "passwordTitle": "password",
+    "submitButton": "Sign me In",
+    "ctaRegister": "Don't have an account yet?",
+    "redirectRegister": "Sign Up"
+  },
+  "registerScreen": {
+    "usernameTitle": "username",
+    "usernameExample": "user123",
+    "emailTitle": "email",
+    "emailExample": "user@email.com",
+    "passwordTitle": "password",
+    "repeatPasswordTitle": "repeat password",
+    "submitButton": "Sign me up",
+    "ctaLogin": "Do you already have an account?",
+    "redirectLogin": "Sign In"
+  },
+  "validations": {
+    "emptyFields": "Error: there are empty fields in the form",
+    "passwordRepeat": "Error: introduced passwords don't match"
+  }
+}

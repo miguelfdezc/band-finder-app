@@ -10,10 +10,13 @@ import Title from '../components/Title';
 import CustomInput from '../components/Input';
 import CustomButton from '../components/Button';
 import { StatusBar } from 'expo-status-bar';
-import Global from '../Global';
+import Constants from 'expo-constants';
 import axios from 'axios';
+import { t } from '../lang/IMLocalized';
 
 const RegisterScreen = ({ navigation }) => {
+  const API_BASE_PATH = Constants.manifest.extra.apiBasePath;
+
   const [usuario, setUsuario] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,11 +26,11 @@ const RegisterScreen = ({ navigation }) => {
 
   const validateForm = () => {
     if (!usuario || !email || !password || !repeatPassword) {
-      alert('Error: faltan campos del formulario por rellenar');
+      alert(t('validations.emptyFields'));
       return false;
     }
     if (password !== repeatPassword) {
-      alert('Error: las contraseñas introducidas no coinciden');
+      alert(t('validations.passwordRepeat'));
       return false;
     }
     return true;
@@ -36,8 +39,8 @@ const RegisterScreen = ({ navigation }) => {
   const signUp = async () => {
     if (validateForm()) {
       await axios
-        .post(`${Global.url}/register/musicos`, { usuario, email, password })
-        .then(() => navigation.navigate('Inicio de sesión'))
+        .post(`${API_BASE_PATH}/register/musicos`, { usuario, email, password })
+        .then(() => navigation.navigate(t('screenTitles.login')))
         .catch((err) => alert(err));
     }
   };
@@ -47,22 +50,22 @@ const RegisterScreen = ({ navigation }) => {
       <Title>Regístrate</Title>
       <StatusBar style='light' />
       <View style={styles.inputContainer}>
-        <Text>usuario</Text>
+        <Text>{t('registerScreen.usernameTitle')}</Text>
         <CustomInput
-          placeholder='usuario123'
+          placeholder={t('registerScreen.usernameExample')}
           autoFocus
           type='text'
           value={usuario}
           onChangeText={(text) => setUsuario(text)}
         />
-        <Text>email</Text>
+        <Text>{t('registerScreen.emailTitle')}</Text>
         <CustomInput
-          placeholder='usuario@email.com'
+          placeholder={t('registerScreen.emailExample')}
           type='email'
           value={email}
           onChangeText={(text) => setEmail(text)}
         />
-        <Text>contraseña</Text>
+        <Text>{t('registerScreen.passwordTitle')}</Text>
         <CustomInput
           placeholder='********'
           secureTextEntry
@@ -70,7 +73,7 @@ const RegisterScreen = ({ navigation }) => {
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
-        <Text>repetir contraseña</Text>
+        <Text>{t('registerScreen.repeatPasswordTitle')}</Text>
         <CustomInput
           placeholder='********'
           secureTextEntry
@@ -81,17 +84,19 @@ const RegisterScreen = ({ navigation }) => {
         />
       </View>
       <View style={{ height: 20 }} />
-      <CustomButton onPress={signUp} title='Registrarme' />
+      <CustomButton onPress={signUp} title={t('registerScreen.submitButton')} />
       <View style={{ height: 20 }} />
       <Text style={{ fontFamily: 'rubik', fontSize: 16, marginVertical: 10 }}>
-        ¿Ya tienes una cuenta?
+        {t('registerScreen.ctaLogin')}
       </Text>
       <TouchableOpacity
         activeOpacity={0.6}
-        onPress={() => navigation.navigate('Inicio de sesión')}
+        onPress={() => navigation.navigate(t('screenTitles.login'))}
       >
         <View>
-          <Text style={styles.buttonText}>Iniciar sesión</Text>
+          <Text style={styles.buttonText}>
+            {t('registerScreen.redirectLogin')}
+          </Text>
         </View>
       </TouchableOpacity>
       <View style={{ height: 100 }} />
