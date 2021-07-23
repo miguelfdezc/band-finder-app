@@ -6,8 +6,9 @@ import { auth } from '../config';
 import { Image } from 'react-native-elements';
 import Constants from 'expo-constants';
 import axios from 'axios';
+import { t } from '../lang/IMLocalized';
 
-const PerfilScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation }) => {
   const API_BASE_PATH = Constants.manifest.extra.apiBasePath;
 
   const [usuario, setUsuario] = useState();
@@ -48,7 +49,11 @@ const PerfilScreen = ({ navigation }) => {
   );
 };
 
-export default PerfilScreen;
+export default ProfileScreen;
+
+export const screenOptions = {
+  headerTitle: t('screenTitles.profile'),
+};
 
 const styles = StyleSheet.create({
   container: {

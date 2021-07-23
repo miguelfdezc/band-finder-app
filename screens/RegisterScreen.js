@@ -40,7 +40,7 @@ const RegisterScreen = ({ navigation }) => {
     if (validateForm()) {
       await axios
         .post(`${API_BASE_PATH}/register/musicos`, { usuario, email, password })
-        .then(() => navigation.navigate(t('screenTitles.login')))
+        .then(() => navigation.navigate('Login'))
         .catch((err) => alert(err));
     }
   };
@@ -91,7 +91,7 @@ const RegisterScreen = ({ navigation }) => {
       </Text>
       <TouchableOpacity
         activeOpacity={0.6}
-        onPress={() => navigation.navigate(t('screenTitles.login'))}
+        onPress={() => navigation.navigate('Login')}
       >
         <View>
           <Text style={styles.buttonText}>
@@ -105,6 +105,10 @@ const RegisterScreen = ({ navigation }) => {
 };
 
 export default RegisterScreen;
+
+export const screenOptions = {
+  headerShown: false,
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -8,12 +8,12 @@ const MenuScreen = ({ navigation }) => {
   const menuOptions = [
     {
       title: t('screenTitles.home'),
-      onPress: () => navigation.navigate(t('screenTitles.home')),
+      onPress: () => navigation.navigate('Home'),
       icon: 'home-outline',
     },
     {
       title: t('screenTitles.profile'),
-      onPress: () => navigation.navigate(t('screenTitles.profile')),
+      onPress: () => navigation.navigate('Profile'),
       icon: 'person-outline',
     },
     {
@@ -21,7 +21,7 @@ const MenuScreen = ({ navigation }) => {
       onPress: () =>
         auth
           .signOut()
-          .then(() => navigation.replace(t('screenTitles.login')))
+          .then(() => navigation.replace('Login'))
           .catch((error) => {
             alert(error.message);
           }),

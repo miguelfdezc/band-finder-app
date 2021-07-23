@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
 import Title from '../components/Title';
 import Brand from '../components/Brand';
@@ -9,20 +10,13 @@ import { Image } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
 import { auth } from '../config';
 import { t } from '../lang/IMLocalized';
+import { loginAction } from '../store/actions';
 
 const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        navigation.navigate(t('screenTitles.home'));
-      }
-    });
-
-    return unsubscribe;
-  }, []);
 
   const validateForm = () => {
     if (!email || !password) {
@@ -34,15 +28,14 @@ const LoginScreen = ({ navigation }) => {
 
   const signIn = async () => {
     if (validateForm()) {
-      await auth.signInWithEmailAndPassword(email, password).catch((error) => {
-        alert(error.message);
-      });
+      dispatch(loginAction(email, password));
     }
   };
 
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <StatusBar style='light' />
+      <View style={{ height: 100 }} />
       <Brand />
       <Image
         source={require('../assets/Playlist-pana.png')}
@@ -71,7 +64,7 @@ const LoginScreen = ({ navigation }) => {
       <CustomButton onPress={signIn} title={t('loginScreen.submitButton')} />
       <Text>{t('loginScreen.ctaRegister')}</Text>
       <CustomButton
-        onPress={() => navigation.navigate(t('screenTitles.register'))}
+        onPress={() => navigation.navigate('Register')}
         title={t('loginScreen.redirectRegister')}
       />
       <View style={{ height: 100 }} />
@@ -80,6 +73,10 @@ const LoginScreen = ({ navigation }) => {
 };
 
 export default LoginScreen;
+
+export const screenOptions = {
+  headerShown: false,
+};
 
 const styles = StyleSheet.create({
   container: {
