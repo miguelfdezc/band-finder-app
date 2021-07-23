@@ -6,13 +6,9 @@ import { Ionicons, SimpleLineIcons } from '@expo/vector-icons';
 const NavBar = ({ navigation, type, icon }) => {
   return (
     <View style={styles.navContainer}>
-      <TouchableOpacity
-        style={styles.icon}
-        onPress={() => navigation.replace('Menu')}
-      >
-        <Ionicons name='menu' size={24} color='#1B141F' />
-      </TouchableOpacity>
-      <Brand />
+      <View style={styles.brand}>
+        <Brand />
+      </View>
       <TouchableOpacity style={styles.icon}>
         {type === 'Ionicons' && (
           <Ionicons name={icon} size={24} color='#1B141F' />
@@ -30,12 +26,20 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
     backgroundColor: 'white',
     minHeight: 50,
   },
+  brand: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '80%',
+  },
   icon: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
     paddingHorizontal: 10,
   },
   menuTitle: {

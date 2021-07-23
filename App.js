@@ -1,25 +1,16 @@
-import 'react-native-gesture-handler';
 import React, { useState } from 'react';
+import 'react-native-gesture-handler';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 
-import { t, init } from './lang/IMLocalized';
+import { init } from './lang/IMLocalized';
+import AppNavigator from './navigation/AppNavigator';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import HomeScreen from './screens/HomeScreen';
-import MenuScreen from './screens/MenuScreen';
-import PerfilScreen from './screens/PerfilScreen';
-
-const Stack = createStackNavigator();
-
-const globalScreenOptions = {
-  headerStyle: { backgroundColor: 'white' },
-  headerTitleStyle: { color: 'black' },
-};
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+import reducer from './store/reducers';
+import rootSaga from './store/sagas';
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -27,6 +18,11 @@ const fetchFonts = () => {
     rubik: require('./assets/fonts/Rubik-Regular.ttf'),
   });
 };
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+sagaMiddleware.run(rootSaga);
 
 export default function App() {
   init();
@@ -43,29 +39,8 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        // initialRouteName='Perfil'
-        screenOptions={globalScreenOptions}
-      >
-        <Stack.Screen
-          name={t('screenTitles.login')}
-          component={LoginScreen}
-        ></Stack.Screen>
-        <Stack.Screen
-          name={t('screenTitles.register')}
-          component={RegisterScreen}
-        ></Stack.Screen>
-        <Stack.Screen
-          name={t('screenTitles.home')}
-          component={HomeScreen}
-        ></Stack.Screen>
-        <Stack.Screen name='Menu' component={MenuScreen}></Stack.Screen>
-        <Stack.Screen
-          name={t('screenTitles.profile')}
-          component={PerfilScreen}
-        ></Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <AppNavigator />
+    </Provider>
   );
 }
