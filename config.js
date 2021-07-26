@@ -10,6 +10,7 @@ if (firebase.apps.length === 0) {
   firebase.app();
 }
 
-const auth = firebase.auth();
+let auth = firebase.auth();
+// auth.useEmulator('http://0.0.0.0:9099/');
 
 export { auth };
