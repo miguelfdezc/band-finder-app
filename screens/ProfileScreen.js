@@ -21,10 +21,6 @@ const ProfileScreen = ({ navigation }) => {
       .catch((err) => alert(err));
   }, []);
 
-  useEffect(() => {
-    console.log(usuario);
-  }, [usuario]);
-
   return (
     <View style={{ margin: 0, backgroundColor: 'white', height: 'auto' }}>
       <NavBar navigation={navigation} type='SimpleLineIcons' icon='pencil' />

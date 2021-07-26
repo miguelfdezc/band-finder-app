@@ -9,8 +9,8 @@ function* login(action) {
     const { email, password } = action;
     yield call(() => auth.signInWithEmailAndPassword(email, password));
     yield put(loginActionSuccess(auth.currentUser));
-  } catch (err) {
-    alert(`ERROR: ${error.message}`);
+  } catch (error) {
+    console.error(`ERROR: ${error.message}`);
   }
 }
 
@@ -18,8 +18,8 @@ function* logout(action) {
   try {
     yield call(() => auth.signOut());
     yield put(logoutActionSuccess());
-  } catch (err) {
-    alert(`ERROR: ${error.message}`);
+  } catch (error) {
+    console.error(`ERROR: ${error.message}`);
   }
 }
 
