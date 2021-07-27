@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,23 +6,21 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Title from '../components/Title';
 import CustomInput from '../components/Input';
 import CustomButton from '../components/Button';
 import { StatusBar } from 'expo-status-bar';
-import Constants from 'expo-constants';
-import axios from 'axios';
 import { t } from '../lang/IMLocalized';
+import { signUpAction } from '../store/actions';
 
 const RegisterScreen = ({ navigation }) => {
-  const API_BASE_PATH = Constants.manifest.extra.apiBasePath;
+  const dispatch = useDispatch();
 
   const [usuario, setUsuario] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-
-  useEffect(() => {}, []);
 
   const validateForm = () => {
     if (!usuario || !email || !password || !repeatPassword) {
@@ -36,12 +34,9 @@ const RegisterScreen = ({ navigation }) => {
     return true;
   };
 
-  const signUp = async () => {
+  const signUp = () => {
     if (validateForm()) {
-      await axios
-        .post(`${API_BASE_PATH}/register/musicos`, { usuario, email, password })
-        .then(() => navigation.navigate('Login'))
-        .catch((err) => alert(err));
+      dispatch(signUpAction(usuario, email, password));
     }
   };
 

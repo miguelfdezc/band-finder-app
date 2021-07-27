@@ -1,5 +1,12 @@
 import { ActionTypes } from '../types';
 
+export const signUpAction = (usuario, email, password) => ({
+  type: ActionTypes.SIGNUP,
+  usuario,
+  email,
+  password,
+});
+
 export const loginAction = (email, password) => ({
   type: ActionTypes.LOGIN,
   email,
