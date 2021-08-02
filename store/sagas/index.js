@@ -1,7 +1,11 @@
 import { put, takeLatest, all, call } from 'redux-saga/effects';
 import { auth } from '../../config';
 import axios from 'axios';
-import { loginActionSuccess, logoutActionSuccess } from '../actions';
+import {
+  loginActionSuccess,
+  logoutActionSuccess,
+  getUserActionSuccess,
+} from '../actions';
 import { ActionTypes } from '../types';
 import * as RootNavigation from '../../navigation/RootNavigation';
 import Constants from 'expo-constants';
@@ -44,17 +48,25 @@ function* logout() {
   }
 }
 
-/* function* getUser() {
-  axios
-    .get(`${API_BASE_PATH}/usuarios/${uid}?uid=${uid}`)
-    .then((response) => setUsuario(response.data.user))
-    .catch((err) => alert(err));
-} */
+function* getUser(action) {
+  try {
+    const { uid } = action;
+    const response = yield call(
+      axios.get,
+      `${API_BASE_PATH}/users/${uid}?uid=${uid}`
+    );
+    yield put(getUserActionSuccess(response.data.user));
+  } catch (error) {
+    if (error.response.data.message) console.error(error.response.data.message);
+    else console.error(`ERROR: ${error.message}`);
+  }
+}
 
 export default function* rootSaga() {
   yield all([
     takeLatest(ActionTypes.SIGNUP, signUp),
     takeLatest(ActionTypes.LOGIN, login),
     takeLatest(ActionTypes.LOGOUT, logout),
+    takeLatest(ActionTypes.GET_USER, getUser),
   ]);
 }

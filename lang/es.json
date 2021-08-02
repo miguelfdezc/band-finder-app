@@ -3,7 +3,8 @@
     "login": "Inicio de sesión",
     "register": "Registro",
     "home": "Inicio",
-    "profile": "Perfil"
+    "profile": "Perfil",
+    "editProfile": "Editar Perfil"
   },
   "menuOptions": {
     "goBack": "Volver",

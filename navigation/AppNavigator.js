@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { navigationRef, isReadyRef } from './RootNavigation';
 import { NavigationContainer } from '@react-navigation/native';
 import { MenuNavigator, AuthNavigator } from './MainNavigator';
 
 const AppNavigator = () => {
-  const authUser = useSelector((app) => app.authUser);
+  const authUser = useSelector((state) => state.authUser);
+  const isAuthUser = authUser && Object.keys(authUser).length !== 0;
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       isReadyRef.current = false;
     };
@@ -20,8 +21,8 @@ const AppNavigator = () => {
         isReadyRef.current = true;
       }}
     >
-      {authUser && <MenuNavigator />}
-      {!authUser && <AuthNavigator />}
+      {isAuthUser && <MenuNavigator />}
+      {!isAuthUser && <AuthNavigator />}
     </NavigationContainer>
   );
 };

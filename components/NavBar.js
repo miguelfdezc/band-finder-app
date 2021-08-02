@@ -1,48 +1,64 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Brand from './Brand';
-import { Ionicons, SimpleLineIcons } from '@expo/vector-icons';
+import { StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { HeaderButton } from 'react-navigation-header-buttons';
+import { Ionicons } from '@expo/vector-icons';
 
-const NavBar = ({ navigation, type, icon }) => {
+const CustomHeaderButton = (props) => {
   return (
-    <View style={styles.navContainer}>
-      <View style={styles.brand}>
-        <Brand />
-      </View>
-      <TouchableOpacity style={styles.icon}>
-        {type === 'Ionicons' && (
-          <Ionicons name={icon} size={24} color='#1B141F' />
-        )}
-        {type === 'SimpleLineIcons' && (
-          <SimpleLineIcons name={icon} size={24} color='#1B141F' />
-        )}
-      </TouchableOpacity>
-    </View>
+    <HeaderButton
+      {...props}
+      IconComponent={props.IconComponent ?? Ionicons}
+      iconSize={24}
+      color='black'
+    />
   );
 };
 
+const NavBar = (
+  navData,
+  toggleDrawer = false,
+  title,
+  iconName,
+  IconComponent,
+  onPress
+) => {
+  let nav = {
+    headerTitle: 'Band Finder',
+    headerTitleStyle: styles.title,
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title={title}
+          IconComponent={IconComponent}
+          iconName={iconName}
+          onPress={onPress}
+        />
+      </HeaderButtons>
+    ),
+  };
+  if (toggleDrawer) {
+    nav = {
+      ...nav,
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title='Menu'
+            iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+            onPress={() => {
+              navData.navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      ),
+    };
+  }
+  return nav;
+};
+
 const styles = StyleSheet.create({
-  navContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    backgroundColor: 'white',
-    minHeight: 50,
-  },
-  brand: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '80%',
-  },
-  icon: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    paddingHorizontal: 10,
-  },
-  menuTitle: {
+  title: {
     fontFamily: 'source-sans-pro',
     fontStyle: 'normal',
     fontWeight: '900',

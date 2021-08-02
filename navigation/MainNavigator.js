@@ -1,11 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import {
-  createDrawerNavigator,
-  DrawerItemList,
-} from '@react-navigation/drawer';
-import { Platform, SafeAreaView, Button, View } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { StyleSheet, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as RootNavigation from '../navigation/RootNavigation';
 
 import HomeScreen, {
   screenOptions as homeScreenOptions,
@@ -19,23 +17,37 @@ import RegisterScreen, {
 import ProfileScreen, {
   screenOptions as profileScreenOptions,
 } from '../screens/ProfileScreen';
+import EditProfileScreen, {
+  screenOptions as editProfileScreenOptions,
+} from '../screens/EditProfileScreen';
 
 import Colors from '../constants/Colors';
-import { auth } from '../config';
 import { t } from '../lang/IMLocalized';
 import NavBar from '../components/NavBar';
+import { DrawerContent } from './DrawerContent';
 
 const defaultNavOptions = {
   headerStyle: {
-    backgroundColor: Platform.OS === 'android' ? 'white' : '',
+    backgroundColor: 'white',
   },
   headerTitleStyle: {
     color: 'black',
   },
-  headerBackTitleStyle: {
-    fontFamily: 'open-sans',
-  },
-  headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primary,
+  headerTintColor: 'black',
+};
+
+const HomeStackNavigator = createStackNavigator();
+
+export const HomeNavigator = () => {
+  return (
+    <HomeStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <HomeStackNavigator.Screen
+        name='Home'
+        component={HomeScreen}
+        options={homeScreenOptions}
+      />
+    </HomeStackNavigator.Navigator>
+  );
 };
 
 const ProfileStackNavigator = createStackNavigator();
@@ -47,11 +59,27 @@ export const ProfileNavigator = () => {
         name='Profile'
         component={ProfileScreen}
         options={profileScreenOptions}
+        /* options={{
+          headerTitle: (props) => (
+            <NavBar
+              icons='SimpleLineIcons'
+              icon='pencil'
+              onPress={() => RootNavigation.navigate('EditProfile')}
+              {...props}
+            />
+          ),
+        }} */
       />
       <ProfileStackNavigator.Screen
         name='EditProfile'
         component={EditProfileScreen}
         options={editProfileScreenOptions}
+        /* options={{
+          headerShown: true,
+          headerTitle: (props) => (
+            <NavBar type='goBack' icons='Ionicons' icon='search' {...props} />
+          ),
+        }} */
       />
     </ProfileStackNavigator.Navigator>
   );
@@ -62,59 +90,29 @@ const MenuDrawerNavigator = createDrawerNavigator();
 export const MenuNavigator = () => {
   return (
     <MenuDrawerNavigator.Navigator
-      drawerContent={(props) => {
-        return (
-          <View style={{ flex: 1, paddingTop: 20 }}>
-            <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-              <DrawerItemList {...props} />
-              <Button
-                title='Logout'
-                color={Colors.primary}
-                onPress={() => {
-                  auth
-                    .signOut()
-                    .then(() => navigation.replace('Login'))
-                    .catch((error) => {
-                      alert(error.message);
-                    });
-                }}
-              />
-            </SafeAreaView>
-          </View>
-        );
-      }}
+      drawerContent={(props) => <DrawerContent {...props} />}
       drawerContentOptions={{
         activeTintColor: Colors.primary,
       }}
     >
       <MenuDrawerNavigator.Screen
-        name='Home'
-        component={HomeScreen}
+        name='HomeNavigator'
+        component={HomeNavigator}
         options={{
-          drawerIcon: (props) => (
-            <Ionicons
-              name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-              size={24}
-              color='#1B141F'
-            />
+          drawerIcon: () => (
+            <Ionicons name='home-outline' size={24} color='#1B141F' />
           ),
-          headerShown: true,
-          headerTitle: (props) => (
-            <NavBar type='Ionicons' icon='search' {...props} />
-          ),
+          drawerLabel: t('screenTitles.home'),
         }}
       />
       <MenuDrawerNavigator.Screen
-        name='Profile'
+        name='ProfileNavigator'
         component={ProfileNavigator}
         options={{
-          drawerIcon: (props) => (
-            <Ionicons
-              name={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
-              size={23}
-              color={props.color}
-            />
+          drawerIcon: () => (
+            <Ionicons name='person-outline' size={24} color='#1B141F' />
           ),
+          drawerLabel: t('screenTitles.profile'),
         }}
       />
     </MenuDrawerNavigator.Navigator>
@@ -139,3 +137,21 @@ export const AuthNavigator = () => {
     </AuthStackNavigator.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  option: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    padding: 20,
+  },
+  button: {
+    marginLeft: 20,
+  },
+  buttonText: {
+    fontFamily: 'rubik',
+    fontSize: 22,
+  },
+});
