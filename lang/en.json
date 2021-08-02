@@ -3,7 +3,8 @@
     "login": "Sign In",
     "register": "Sign Up",
     "home": "Home",
-    "profile": "Profile"
+    "profile": "Profile",
+    "editProfile": "Edit Profile"
   },
   "menuOptions": {
     "goBack": "Go Back",

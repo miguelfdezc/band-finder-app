@@ -18,3 +18,7 @@ export function navigate(name, params) {
 export function push(...args) {
   navigationRef.current?.dispatch(StackActions.push(...args));
 }
+
+export function toggleDrawer() {
+  navigationRef.current?.toggleDrawer();
+}
