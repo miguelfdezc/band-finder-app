@@ -8,7 +8,7 @@ const reducer = (state = DefaultState, action) => {
       return {
         ...state,
         authUser: DefaultState.authUser,
-        currentUser: DefaultState.authUser,
+        currentUser: DefaultState.currentUser,
       };
     case ActionTypes.GET_USER_SUCCESS:
       return { ...state, currentUser: action.data };
