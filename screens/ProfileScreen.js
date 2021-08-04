@@ -5,6 +5,7 @@ import { getUserAction } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
+import Colors from '../constants/Colors';
 
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -19,10 +20,11 @@ const ProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     setIsCurrentUser(currentUser && Object.keys(currentUser).length !== 0);
+    console.log(currentUser);
   }, [currentUser]);
 
   return (
-    <View style={{ margin: 0, backgroundColor: 'white', height: 'auto' }}>
+    <View style={{ margin: 0, backgroundColor: 'white', height: '100%' }}>
       {isCurrentUser && (
         <>
           {!!currentUser.imagenFondo && (
@@ -53,6 +55,13 @@ const ProfileScreen = ({ navigation }) => {
               <Text style={styles.infoText}>{currentUser.fans} fans</Text>
             </View>
             <Text style={styles.descripcion}>{currentUser.descripcion}</Text>
+            <View style={styles.profileOptions}>
+              <View style={styles.selectedOption}>
+                <Text>Mis publicaciones</Text>
+              </View>
+              <Text>Me gusta</Text>
+              <Text>Listas</Text>
+            </View>
           </View>
         </>
       )}
@@ -68,13 +77,28 @@ export const screenOptions = (navData) =>
   });
 
 const styles = StyleSheet.create({
-  /* container: {
-    top: '-50px',
-    height: 'auto',
-  }, */
+  container: {
+    position: 'absolute',
+    top: 85,
+    // height: 'auto',
+  },
+  profileOptions: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '70%',
+    marginTop: 30,
+    paddingHorizontal: 16,
+  },
+  selectedOption: {
+    paddingBottom: 5,
+    borderBottomWidth: 2,
+    borderStyle: 'solid',
+    borderBottomColor: Colors.blue,
+  },
   backgroundImg: {
     width: '100%',
-    height: '135px',
+    height: 135,
   },
   profileImgContainer: {
     alignItems: 'center',
@@ -86,16 +110,17 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderRadius: 50,
     borderColor: 'white',
+    backgroundColor: 'white',
   },
   title: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 15,
     marginBottom: 10,
   },
   info: {
     flex: 1,
     flexDirection: 'row',
-    width: '60%',
+    width: '80%',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'space-around',

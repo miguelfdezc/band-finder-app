@@ -16,7 +16,7 @@ function* signUp(action) {
   try {
     const { usuario, email, password } = action;
     yield call(() =>
-      axios.post(`${API_BASE_PATH}/register/musicos`, {
+      axios.post(`${API_BASE_PATH}/users/musicos`, {
         usuario,
         email,
         password,
