@@ -22,6 +22,12 @@ export const getUserAction = (uid) => ({
   uid,
 });
 
+export const editUserAction = (uid, data) => ({
+  type: ActionTypes.EDIT_USER,
+  uid,
+  data,
+});
+
 export const loginActionSuccess = (data) => ({
   type: ActionTypes.LOGIN_SUCCESS,
   data,
@@ -33,5 +39,10 @@ export const logoutActionSuccess = () => ({
 
 export const getUserActionSuccess = (data) => ({
   type: ActionTypes.GET_USER_SUCCESS,
+  data,
+});
+
+export const editUserActionSuccess = (data) => ({
+  type: ActionTypes.EDIT_USER_SUCCESS,
   data,
 });

@@ -5,6 +5,7 @@ import {
   loginActionSuccess,
   logoutActionSuccess,
   getUserActionSuccess,
+  editUserActionSuccess,
 } from '../actions';
 import { ActionTypes } from '../types';
 import * as RootNavigation from '../../navigation/RootNavigation';
@@ -62,11 +63,27 @@ function* getUser(action) {
   }
 }
 
+function* editUser(action) {
+  try {
+    const { uid } = action;
+    const response = yield call(
+      axios.put,
+      `${API_BASE_PATH}/users/${uid}?uid=${uid}`,
+      action.data
+    );
+    yield put(editUserActionSuccess(response.data.user));
+  } catch (error) {
+    if (error.response.data.message) console.error(error.response.data.message);
+    else console.error(`ERROR: ${error.message}`);
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeLatest(ActionTypes.SIGNUP, signUp),
     takeLatest(ActionTypes.LOGIN, login),
     takeLatest(ActionTypes.LOGOUT, logout),
     takeLatest(ActionTypes.GET_USER, getUser),
+    takeLatest(ActionTypes.EDIT_USER, editUser),
   ]);
 }

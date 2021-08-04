@@ -6,6 +6,8 @@ export const ActionTypes = {
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
   GET_USER: 'GET_USER',
   GET_USER_SUCCESS: 'GET_USER_SUCCESS',
+  EDIT_USER: 'EDIT_USER',
+  EDIT_USER_SUCCESS: 'EDIT_USER_SUCCESS',
 };
 
 export const DefaultState = {
