@@ -12,5 +12,6 @@ if (firebase.apps.length === 0) {
 
 let auth = firebase.auth();
 // auth.useEmulator('http://0.0.0.0:9099/');
+let storage = firebase.storage();
 
-export { auth };
+export { auth, storage };

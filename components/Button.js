@@ -13,10 +13,11 @@ const CustomButton = (props) => {
 
 const styles = StyleSheet.create({
   button: {
+    alignItems: 'center',
     marginTop: 10,
     paddingVertical: 12,
     paddingHorizontal: 16,
-
+    width: 150,
     backgroundColor: '#E5FDFF',
     borderWidth: 1,
     borderColor: '#61DBFB',

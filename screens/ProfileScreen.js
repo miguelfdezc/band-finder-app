@@ -6,21 +6,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
 import Colors from '../constants/Colors';
+import { useIsFocused } from '@react-navigation/native';
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = (props) => {
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
 
   const authUser = useSelector((state) => state.authUser);
   const currentUser = useSelector((state) => state.currentUser);
   const [isCurrentUser, setIsCurrentUser] = useState(false);
 
   useEffect(() => {
-    dispatch(getUserAction(authUser.uid));
-  }, []);
+    if (isFocused) {
+      dispatch(getUserAction(authUser.uid));
+    }
+  }, [props, isFocused]);
 
   useEffect(() => {
     setIsCurrentUser(currentUser && Object.keys(currentUser).length !== 0);
-    console.log(currentUser);
   }, [currentUser]);
 
   return (
@@ -80,7 +83,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 85,
-    // height: 'auto',
+    width: '100%',
   },
   profileOptions: {
     flex: 1,
