@@ -1,24 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  SafeAreaView,
+} from 'react-native';
 import Title from '../components/Title';
-import { getUserAction } from '../store/actions';
+import { getPostsUserAction, getUserAction } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
 import Colors from '../constants/Colors';
 import { useIsFocused } from '@react-navigation/native';
+import Post from '../components/UI/Post';
 
 const ProfileScreen = (props) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
-  const authUser = useSelector((state) => state.authUser);
-  const currentUser = useSelector((state) => state.currentUser);
+  const authUser = useSelector((state) => state.auth.authUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const posts = useSelector((state) => state.post.publicaciones);
   const [isCurrentUser, setIsCurrentUser] = useState(false);
 
   useEffect(() => {
     if (isFocused) {
       dispatch(getUserAction(authUser.uid));
+      dispatch(getPostsUserAction(authUser.uid));
     }
   }, [props, isFocused]);
 
@@ -62,8 +72,18 @@ const ProfileScreen = (props) => {
               <View style={styles.selectedOption}>
                 <Text>Mis publicaciones</Text>
               </View>
-              <Text>Me gusta</Text>
-              <Text>Listas</Text>
+              <View>
+                <Text>Me gusta</Text>
+              </View>
+              <View>
+                <Text>Listas</Text>
+              </View>
+            </View>
+            <View>
+              <FlatList
+                data={posts}
+                renderItem={(item) => <Post data={item} />}
+              />
             </View>
           </View>
         </>
@@ -81,25 +101,25 @@ export const screenOptions = (navData) =>
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
     top: 85,
     width: '100%',
   },
   profileOptions: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     width: '70%',
-    marginTop: 30,
+    justifyContent: 'space-between',
     paddingHorizontal: 16,
+    marginBottom: 25,
   },
   selectedOption: {
-    paddingBottom: 5,
+    height: 25,
     borderBottomWidth: 2,
     borderStyle: 'solid',
     borderBottomColor: Colors.blue,
   },
   backgroundImg: {
+    position: 'absolute',
     width: '100%',
     height: 135,
   },
@@ -127,7 +147,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginBottom: 15,
+    marginVertical: 10,
   },
   infoText: {
     fontFamily: 'rubik',
@@ -136,6 +156,7 @@ const styles = StyleSheet.create({
   },
   descripcion: {
     marginHorizontal: 16,
+    marginVertical: 20,
     fontFamily: 'rubik',
     fontSize: 16,
     color: '#000',

@@ -29,7 +29,7 @@ LogBox.ignoreLogs(['Setting a timer']);
 const EditProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const currentUser = useSelector((state) => state.currentUser);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const [editUser, setEditUser] = useState({
     photoURL: '',
     imagenFondo: '',
