@@ -19,8 +19,10 @@ import {
   updateSharedAction,
 } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 const Post = ({ data }) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const authUser = useSelector((state) => state.auth.authUser);
 
@@ -86,7 +88,7 @@ const Post = ({ data }) => {
                   alignItems: 'center',
                 }}
                 onPress={() => {
-                  setModalVisible(!modalVisible);
+                  navigation.navigate('EditPost', { id });
                 }}
               >
                 <Ionicons name='build' size={24} color='#ffc107' />

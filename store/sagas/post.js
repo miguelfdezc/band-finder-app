@@ -3,6 +3,8 @@ import { auth } from '../../config';
 import axios from 'axios';
 import {
   deletePostActionSuccess,
+  getPostAction,
+  getPostActionSuccess,
   getPostsUserActionSuccess,
   updateLikesActionSuccess,
   updateSharedActionSuccess,
@@ -81,6 +83,28 @@ function* createPost(action) {
   }
 }
 
+function* getPost(action) {
+  try {
+    const { id } = action;
+    const response = yield call(axios.get, `${API_BASE_PATH}/posts/${id}`);
+    yield put(getPostActionSuccess(response.data.post));
+  } catch (error) {
+    if (error.response.data.message) Alert.alert(error.response.data.message);
+    else Alert.alert(`ERROR: ${error.message}`);
+  }
+}
+
+function* editPost(action) {
+  try {
+    const { id, data } = action;
+    yield call(axios.put, `${API_BASE_PATH}/posts/${id}`, data);
+    yield call(() => RootNavigation.goBack());
+  } catch (error) {
+    if (error.response.data.message) Alert.alert(error.response.data.message);
+    else Alert.alert(`ERROR: ${error.message}`);
+  }
+}
+
 export function* postSaga() {
   yield all([
     takeLatest(PostActionTypes.GET_POSTS, getPostsUser),
@@ -88,5 +112,7 @@ export function* postSaga() {
     takeLatest(PostActionTypes.UPDATE_SHARED, updateShared),
     takeLatest(PostActionTypes.DELETE_POST, deletePost),
     takeLatest(PostActionTypes.CREATE_POST, createPost),
+    takeLatest(PostActionTypes.GET_POST, getPost),
+    takeLatest(PostActionTypes.EDIT_POST, editPost),
   ]);
 }

@@ -23,6 +23,9 @@ import EditProfileScreen, {
 import CreatePostScreen, {
   screenOptions as createPostScreenOptions,
 } from '../screens/CreatePostScreen';
+import EditPostScreen, {
+  screenOptions as editPostScreenOptions,
+} from '../screens/EditPostScreen';
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
@@ -53,6 +56,11 @@ export const HomeNavigator = () => {
         name='CreatePost'
         component={CreatePostScreen}
         options={createPostScreenOptions}
+      />
+      <HomeStackNavigator.Screen
+        name='EditPost'
+        component={EditPostScreen}
+        options={editPostScreenOptions}
       />
     </HomeStackNavigator.Navigator>
   );

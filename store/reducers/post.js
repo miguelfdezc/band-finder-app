@@ -24,6 +24,15 @@ export const postReducer = (state = PostDefaultState(), action) => {
         (value) => value.id !== action.data.id
       );
       return { ...state, publicaciones };
+    case PostActionTypes.GET_POST_SUCCESS:
+      return { ...state, publicacion: action.data };
+    case PostActionTypes.EDIT_POST_SUCCESS:
+      publicaciones = state.publicaciones;
+      publicaciones = publicaciones.map((value) => {
+        if (value.id === action.data.id) value = action.data;
+        return value;
+      });
+      return { ...state, publicaciones, publicacion: action.data };
     default:
       return state;
   }

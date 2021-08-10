@@ -27,6 +27,17 @@ export const createPostAction = (data) => ({
   data,
 });
 
+export const getPostAction = (id) => ({
+  type: PostActionTypes.GET_POST,
+  id,
+});
+
+export const editPostAction = (id, data) => ({
+  type: PostActionTypes.EDIT_POST,
+  id,
+  data,
+});
+
 export const getPostsUserActionSuccess = (data) => ({
   type: PostActionTypes.GET_POSTS_SUCCESS,
   data,
@@ -44,5 +55,15 @@ export const updateSharedActionSuccess = (data) => ({
 
 export const deletePostActionSuccess = (data) => ({
   type: PostActionTypes.DELETE_POST_SUCCESS,
+  data,
+});
+
+export const getPostActionSuccess = (data) => ({
+  type: PostActionTypes.GET_POST_SUCCESS,
+  data,
+});
+
+export const editPostActionSuccess = (data) => ({
+  type: PostActionTypes.EDIT_POST_SUCCESS,
   data,
 });
