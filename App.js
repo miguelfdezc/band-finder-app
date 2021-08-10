@@ -9,8 +9,8 @@ import AppNavigator from './navigation/AppNavigator';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import reducer from './store/reducers';
-import rootSaga from './store/sagas';
+import { rootReducer, rootSaga } from './store';
+import { Alert } from 'react-native';
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -21,7 +21,7 @@ const fetchFonts = () => {
 
 const sagaMiddleware = createSagaMiddleware();
 
-export const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+export const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 sagaMiddleware.run(rootSaga);
 
 export default function App() {
@@ -33,7 +33,7 @@ export default function App() {
       <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setDataLoaded(true)}
-        onError={(err) => console.error(err)}
+        onError={(err) => Alert.alert(err)}
       />
     );
   }

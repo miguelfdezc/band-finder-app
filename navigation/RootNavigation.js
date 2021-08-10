@@ -22,3 +22,7 @@ export function push(...args) {
 export function toggleDrawer() {
   navigationRef.current?.toggleDrawer();
 }
+
+export function goBack() {
+  navigationRef.current?.goBack();
+}

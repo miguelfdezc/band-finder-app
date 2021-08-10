@@ -5,8 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { MenuNavigator, AuthNavigator } from './MainNavigator';
 
 const AppNavigator = () => {
-  const authUser = useSelector((state) => state.authUser);
-  const isAuthUser = authUser && Object.keys(authUser).length !== 0;
+  const authUser = useSelector((state) => state.auth.authUser);
+  const isAuthUser = !!authUser && Object.keys(authUser).length !== 0;
 
   useEffect(() => {
     return () => {
