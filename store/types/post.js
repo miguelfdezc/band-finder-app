@@ -7,6 +7,7 @@ export const PostActionTypes = {
   UPDATE_SHARED_SUCCESS: 'UPDATE_SHARED_SUCCESS',
   DELETE_POST: 'DELETE_POST',
   DELETE_POST_SUCCESS: 'DELETE_POST_SUCCESS',
+  CREATE_POST: 'CREATE_POST',
 };
 
 export const PostDefaultState = () => ({

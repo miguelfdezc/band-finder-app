@@ -20,6 +20,9 @@ import ProfileScreen, {
 import EditProfileScreen, {
   screenOptions as editProfileScreenOptions,
 } from '../screens/EditProfileScreen';
+import CreatePostScreen, {
+  screenOptions as createPostScreenOptions,
+} from '../screens/CreatePostScreen';
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
@@ -45,6 +48,11 @@ export const HomeNavigator = () => {
         name='Home'
         component={HomeScreen}
         options={homeScreenOptions}
+      />
+      <HomeStackNavigator.Screen
+        name='CreatePost'
+        component={CreatePostScreen}
+        options={createPostScreenOptions}
       />
     </HomeStackNavigator.Navigator>
   );

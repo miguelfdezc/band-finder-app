@@ -15,7 +15,7 @@ export default HomeScreen;
 
 export const screenOptions = (navData) =>
   NavBar(navData, true, 'Add', 'add', Ionicons, () => {
-    Alert.alert('Buscando...');
+    navData.navigation.navigate('CreatePost');
   });
 
 const styles = StyleSheet.create({});

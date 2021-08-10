@@ -70,11 +70,23 @@ function* deletePost(action) {
   }
 }
 
+function* createPost(action) {
+  try {
+    const { data } = action;
+    yield call(axios.post, `${API_BASE_PATH}/posts`, data);
+    yield call(() => RootNavigation.navigate('Home'));
+  } catch (error) {
+    if (error.response.data.message) Alert.alert(error.response.data.message);
+    else Alert.alert(`ERROR: ${error.message}`);
+  }
+}
+
 export function* postSaga() {
   yield all([
     takeLatest(PostActionTypes.GET_POSTS, getPostsUser),
     takeLatest(PostActionTypes.UPDATE_LIKES, updateLikes),
     takeLatest(PostActionTypes.UPDATE_SHARED, updateShared),
     takeLatest(PostActionTypes.DELETE_POST, deletePost),
+    takeLatest(PostActionTypes.CREATE_POST, createPost),
   ]);
 }

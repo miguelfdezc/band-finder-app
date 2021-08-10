@@ -22,6 +22,11 @@ export const deletePostAction = (id, uid) => ({
   uid,
 });
 
+export const createPostAction = (data) => ({
+  type: PostActionTypes.CREATE_POST,
+  data,
+});
+
 export const getPostsUserActionSuccess = (data) => ({
   type: PostActionTypes.GET_POSTS_SUCCESS,
   data,
