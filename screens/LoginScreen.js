@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { StyleSheet, View, KeyboardAvoidingView } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from 'react-native';
 import Title from '../components/Title';
 import Brand from '../components/Brand';
 import CustomInput from '../components/Input';
@@ -62,11 +67,19 @@ const LoginScreen = ({ navigation }) => {
         />
       </View>
       <CustomButton onPress={signIn} title={t('loginScreen.submitButton')} />
-      <Text>{t('loginScreen.ctaRegister')}</Text>
-      <CustomButton
+      <Text style={{ fontFamily: 'rubik', fontSize: 16, marginVertical: 10 }}>
+        {t('loginScreen.ctaRegister')}
+      </Text>
+      <TouchableOpacity
+        activeOpacity={0.6}
         onPress={() => navigation.navigate('Register')}
-        title={t('loginScreen.redirectRegister')}
-      />
+      >
+        <View>
+          <Text style={styles.buttonText}>
+            {t('loginScreen.redirectRegister')}
+          </Text>
+        </View>
+      </TouchableOpacity>
       <View style={{ height: 100 }} />
     </KeyboardAvoidingView>
   );
@@ -87,4 +100,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   inputContainer: { width: 300 },
+  buttonText: {
+    fontFamily: 'rubik',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: 18,
+    lineHeight: 22,
+    color: '#2D9CDB',
+  },
 });

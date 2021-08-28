@@ -16,7 +16,7 @@
     "emailExample": "usuario@email.com",
     "passwordTitle": "contraseña",
     "submitButton": "Iniciar sesión",
-    "ctaRegister": "¿Aún no tienes una cuenta?",
+    "ctaRegister": "Todavía no tienes una cuenta?",
     "redirectRegister": "Regístrate"
   },
   "registerScreen": {
