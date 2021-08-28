@@ -59,18 +59,34 @@ const ProfileScreen = (props) => {
               <Title>{currentUser.usuario}</Title>
             </View>
             <View style={styles.info}>
-              <Text style={styles.infoText}>{currentUser.ubicacion}</Text>
+              <Text style={styles.infoText}>
+                {currentUser.ubicacion.length > 0
+                  ? currentUser.ubicacion
+                  : 'Ciudad, País'}
+              </Text>
               <Text style={styles.infoText}>
                 {currentUser.customClaims.type === 'musicos'
-                  ? 'Músico'
+                  ? 'Músic@'
                   : 'Negocio'}
               </Text>
-              <Text style={styles.infoText}>{currentUser.fans} fans</Text>
+              {currentUser.customClaims.type === 'musicos' && (
+                <Text style={styles.infoText}>
+                  {currentUser.fans ?? 0} fans
+                </Text>
+              )}
             </View>
-            <Text style={styles.descripcion}>{currentUser.descripcion}</Text>
+            <Text style={styles.descripcion}>
+              {currentUser.descripcion.length > 0
+                ? currentUser.descripcion
+                : 'Texto de descripción...'}
+            </Text>
             <View style={styles.profileOptions}>
               <View style={styles.selectedOption}>
-                <Text>Mis publicaciones</Text>
+                <Text>
+                  {currentUser.customClaims.type === 'musicos'
+                    ? 'Mis publicaciones'
+                    : 'Mis eventos'}
+                </Text>
               </View>
               <View>
                 <Text>Me gusta</Text>

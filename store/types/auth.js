@@ -8,6 +8,6 @@ export const AuthActionTypes = {
 
 export const AuthDefaultState = () => ({
   authUser: {
-    uid: 'HhNJnbPpYEcSmb1s24sb4GEorw63',
+    uid: '7Sy2z0HPr0R7UGtPlhNVPG9T3RI2',
   },
 });

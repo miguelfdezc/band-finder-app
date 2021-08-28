@@ -190,7 +190,9 @@ const EditProfileScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <Text style={styles.blueText}>Cancelar</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.blueText}>Cancelar</Text>
+        </TouchableOpacity>
         <CustomButton
           onPress={() => dispatch(editUserAction(currentUser.uid, editUser))}
           title='Guardar'
