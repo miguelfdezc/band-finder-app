@@ -37,7 +37,8 @@
     "redux-saga": "^1.1.3",
     "expo-file-system": "~11.1.3",
     "expo-image-picker": "~10.2.2",
-    "expo-av": "~9.2.3"
+    "expo-av": "~9.2.3",
+    "@react-native-community/datetimepicker": "3.5.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
