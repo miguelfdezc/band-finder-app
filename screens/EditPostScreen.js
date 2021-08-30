@@ -74,7 +74,7 @@ const EditPostScreen = ({ route, navigation }) => {
         resolve(xhr.response);
       };
       xhr.onerror = function () {
-        reject(new TypeError('Network request failed'));
+        reject(new TypeError(t('validations.network')));
       };
       xhr.responseType = 'blob';
       xhr.open('GET', pickerResult.uri, true);
@@ -98,7 +98,7 @@ const EditPostScreen = ({ route, navigation }) => {
   return (
     <ScrollView style={{ margin: 0, backgroundColor: 'white', height: '100%' }}>
       <View style={styles.title}>
-        <Title>Editar Publicación</Title>
+        <Title>{t('editPostScreen.title')}</Title>
       </View>
       {post.video.length === 0 && (
         <View style={styles.profileImgContainer}>
@@ -115,7 +115,7 @@ const EditPostScreen = ({ route, navigation }) => {
               color='#1B141F'
               style={styles.cameraIcon}
             />
-            <Text style={styles.blueText}>Subir Imagen</Text>
+            <Text style={styles.blueText}>{t('globals.uploadImage')}</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -131,7 +131,7 @@ const EditPostScreen = ({ route, navigation }) => {
               color='#1B141F'
               style={styles.cameraIcon}
             />
-            <Text style={styles.blueText}>Subir vídeo</Text>
+            <Text style={styles.blueText}>{t('globals.uploadVideo')}</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -140,11 +140,9 @@ const EditPostScreen = ({ route, navigation }) => {
           <Video
             ref={videoRef}
             style={styles.video}
-            // style={styles.profileImg}
             source={{
               uri: post.video,
             }}
-            // shouldPlay
             useNativeControls
             resizeMode='cover'
             isLooping
@@ -152,12 +150,12 @@ const EditPostScreen = ({ route, navigation }) => {
           />
         )}
         <View>
-          <Text>Descripción</Text>
+          <Text>{t('editPostScreen.descriptionTitle')}</Text>
           <TextInput
             style={styles.textArea}
             multiline={true}
             numberOfLines={4}
-            placeholder='Texto de descripción...'
+            placeholder={t('editPostScreen.descriptionExample')}
             value={post.descripcion}
             onChangeText={(text) => setPost({ ...post, descripcion: text })}
           />
@@ -165,10 +163,12 @@ const EditPostScreen = ({ route, navigation }) => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <Text style={styles.blueText}>Cancelar</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.blueText}>{t('globals.cancelBtn')}</Text>
+        </TouchableOpacity>
         <CustomButton
           onPress={() => dispatch(editPostAction(id, post))}
-          title='Guardar'
+          title={t('globals.saveBtn')}
         />
       </View>
       <View style={{ height: 100 }} />

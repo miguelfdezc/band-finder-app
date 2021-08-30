@@ -62,7 +62,7 @@ const CreatePostScreen = ({ navigation }) => {
         resolve(xhr.response);
       };
       xhr.onerror = function () {
-        reject(new TypeError('Network request failed'));
+        reject(new TypeError(t('validations.network')));
       };
       xhr.responseType = 'blob';
       xhr.open('GET', pickerResult.uri, true);
@@ -86,7 +86,7 @@ const CreatePostScreen = ({ navigation }) => {
   return (
     <ScrollView style={{ margin: 0, backgroundColor: 'white', height: '100%' }}>
       <View style={styles.title}>
-        <Title>Crear Publicación</Title>
+        <Title>{t('createPostScreen.title')}</Title>
       </View>
       {post.video.length === 0 && (
         <View style={styles.profileImgContainer}>
@@ -103,7 +103,7 @@ const CreatePostScreen = ({ navigation }) => {
               color='#1B141F'
               style={styles.cameraIcon}
             />
-            <Text style={styles.blueText}>Subir Imagen</Text>
+            <Text style={styles.blueText}>{t('globals.uploadImage')}</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -119,7 +119,7 @@ const CreatePostScreen = ({ navigation }) => {
               color='#1B141F'
               style={styles.cameraIcon}
             />
-            <Text style={styles.blueText}>Subir vídeo</Text>
+            <Text style={styles.blueText}>{t('globals.uploadVideo')}</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -128,11 +128,9 @@ const CreatePostScreen = ({ navigation }) => {
           <Video
             ref={videoRef}
             style={styles.video}
-            // style={styles.profileImg}
             source={{
               uri: post.video,
             }}
-            // shouldPlay
             useNativeControls
             resizeMode='cover'
             isLooping
@@ -140,12 +138,12 @@ const CreatePostScreen = ({ navigation }) => {
           />
         )}
         <View>
-          <Text>Descripción</Text>
+          <Text>{t('createPostScreen.descriptionTitle')}</Text>
           <TextInput
             style={styles.textArea}
             multiline={true}
             numberOfLines={4}
-            placeholder='Texto de descripción...'
+            placeholder={t('createPostScreen.descriptionExample')}
             value={post.descripcion}
             onChangeText={(text) => setPost({ ...post, descripcion: text })}
           />
@@ -153,28 +151,18 @@ const CreatePostScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <Text style={styles.blueText}>Cancelar</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.blueText}>{t('globals.cancelBtn')}</Text>
+        </TouchableOpacity>
         <CustomButton
           onPress={() => dispatch(createPostAction(post))}
-          title='Crear'
+          title={t('globals.createBtn')}
         />
       </View>
       <View style={{ height: 100 }} />
     </ScrollView>
   );
 };
-
-/* 
-
-  "usuario": "musico1",
-  "displayName": "Jane Doe",
-  "ubicacion": "Mi caaaaasa",
-  "descripcion": "Descripcion editada...",
-  "phoneNumber": "+11234567890",
-  "photoURL": "http://www.example.com/12345678/photo.png",
-  "imagenFondo": "https://via.placeholder.com/100x100.png?text=Imagen+Fondo",
-
-*/
 
 export default CreatePostScreen;
 

@@ -7,6 +7,7 @@ import {
   FlatList,
   SafeAreaView,
 } from 'react-native';
+import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
 import { getPostsUserAction, getUserAction } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -59,24 +60,40 @@ const ProfileScreen = (props) => {
               <Title>{currentUser.usuario}</Title>
             </View>
             <View style={styles.info}>
-              <Text style={styles.infoText}>{currentUser.ubicacion}</Text>
+              <Text style={styles.infoText}>
+                {currentUser.ubicacion.length > 0
+                  ? currentUser.ubicacion
+                  : t('profileScreen.locationExample')}
+              </Text>
               <Text style={styles.infoText}>
                 {currentUser.customClaims.type === 'musicos'
-                  ? 'Músico'
-                  : 'Negocio'}
+                  ? t('profileScreen.musician')
+                  : t('profileScreen.business')}
               </Text>
-              <Text style={styles.infoText}>{currentUser.fans} fans</Text>
+              {currentUser.customClaims.type === 'musicos' && (
+                <Text style={styles.infoText}>
+                  {currentUser.fans ?? 0} {t('profileScreen.followers')}
+                </Text>
+              )}
             </View>
-            <Text style={styles.descripcion}>{currentUser.descripcion}</Text>
+            <Text style={styles.descripcion}>
+              {currentUser.descripcion.length > 0
+                ? currentUser.descripcion
+                : t('profileScreen.descripTionExample')}
+            </Text>
             <View style={styles.profileOptions}>
               <View style={styles.selectedOption}>
-                <Text>Mis publicaciones</Text>
+                <Text>
+                  {currentUser.customClaims.type === 'musicos'
+                    ? t('profileScreen.posts')
+                    : t('profileScreen.events')}
+                </Text>
               </View>
               <View>
-                <Text>Me gusta</Text>
+                <Text>{t('profileScreen.liked')}</Text>
               </View>
               <View>
-                <Text>Listas</Text>
+                <Text>{t('profileScreen.lists')}</Text>
               </View>
             </View>
             <View>

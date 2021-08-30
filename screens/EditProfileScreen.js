@@ -64,7 +64,7 @@ const EditProfileScreen = ({ navigation }) => {
         resolve(xhr.response);
       };
       xhr.onerror = function () {
-        reject(new TypeError('Network request failed'));
+        reject(new TypeError(t('validations.network')));
       };
       xhr.responseType = 'blob';
       xhr.open('GET', pickerResult.uri, true);
@@ -88,7 +88,7 @@ const EditProfileScreen = ({ navigation }) => {
   return (
     <ScrollView style={{ margin: 0, backgroundColor: 'white', height: '100%' }}>
       <View style={styles.title}>
-        <Title>Editar Perfil</Title>
+        <Title>{t('editProfileScreen.title')}</Title>
       </View>
       <View style={styles.profileImgContainer}>
         {!!editUser.photoURL && (
@@ -107,7 +107,7 @@ const EditProfileScreen = ({ navigation }) => {
             color='#1B141F'
             style={styles.cameraIcon}
           />
-          <Text style={styles.blueText}>Cambiar icono</Text>
+          <Text style={styles.blueText}>{t('globals.changeIcon')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.profileImgContainer}>
@@ -127,14 +127,14 @@ const EditProfileScreen = ({ navigation }) => {
             color='#1B141F'
             style={styles.cameraIcon}
           />
-          <Text style={styles.blueText}>Cambiar fondo</Text>
+          <Text style={styles.blueText}>{t('globals.changeBackground')}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.inputContainer}>
         <View>
-          <Text>Usuario</Text>
+          <Text>{t('editProfileScreen.usernameTitle')}</Text>
           <CustomInput
-            placeholder='usuario'
+            placeholder={t('editProfileScreen.usernameExample')}
             autoFocus
             type='text'
             value={editUser.usuario}
@@ -142,9 +142,9 @@ const EditProfileScreen = ({ navigation }) => {
           />
         </View>
         <View>
-          <Text>Nombre</Text>
+          <Text>{t('editProfileScreen.nameTitle')}</Text>
           <CustomInput
-            placeholder='Nombre Apellidos'
+            placeholder={t('editProfileScreen.nameExample')}
             type='text'
             value={editUser.displayName}
             onChangeText={(text) =>
@@ -153,9 +153,9 @@ const EditProfileScreen = ({ navigation }) => {
           />
         </View>
         <View>
-          <Text>Ubicación</Text>
+          <Text>{t('editProfileScreen.locationTitle')}</Text>
           <CustomInput
-            placeholder='Ciudad, País'
+            placeholder={t('editProfileScreen.locationExample')}
             type='text'
             value={editUser.ubicacion}
             onChangeText={(text) =>
@@ -164,12 +164,12 @@ const EditProfileScreen = ({ navigation }) => {
           />
         </View>
         <View>
-          <Text>Descripción</Text>
+          <Text>{t('editProfileScreen.descriptionTitle')}</Text>
           <TextInput
             style={styles.textArea}
             multiline={true}
             numberOfLines={4}
-            placeholder='Texto de descripción...'
+            placeholder={t('editProfileScreen.descriptionExample')}
             value={editUser.descripcion}
             onChangeText={(text) =>
               setEditUser({ ...editUser, descripcion: text })
@@ -177,9 +177,9 @@ const EditProfileScreen = ({ navigation }) => {
           />
         </View>
         <View>
-          <Text>Teléfono</Text>
+          <Text>{t('editProfileScreen.phoneTitle')}</Text>
           <CustomInput
-            placeholder='*34 123 456 789'
+            placeholder={t('editProfileScreen.phoneExample')}
             type='text'
             value={editUser.phoneNumber}
             onChangeText={(text) =>
@@ -190,28 +190,18 @@ const EditProfileScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <Text style={styles.blueText}>Cancelar</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text style={styles.blueText}>{t('globals.cancelBtn')}</Text>
+        </TouchableOpacity>
         <CustomButton
           onPress={() => dispatch(editUserAction(currentUser.uid, editUser))}
-          title='Guardar'
+          title={t('globals.cancelBtn')}
         />
       </View>
       <View style={{ height: 100 }} />
     </ScrollView>
   );
 };
-
-/* 
-
-  "usuario": "musico1",
-  "displayName": "Jane Doe",
-  "ubicacion": "Mi caaaaasa",
-  "descripcion": "Descripcion editada...",
-  "phoneNumber": "+11234567890",
-  "photoURL": "http://www.example.com/12345678/photo.png",
-  "imagenFondo": "https://via.placeholder.com/100x100.png?text=Imagen+Fondo",
-
-*/
 
 export default EditProfileScreen;
 

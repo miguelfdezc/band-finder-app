@@ -1,10 +1,11 @@
 import { AuthActionTypes } from '../types/auth';
 
-export const signUpAction = (usuario, email, password) => ({
+export const signUpAction = (usuario, email, password, tipo) => ({
   type: AuthActionTypes.SIGNUP,
   usuario,
   email,
   password,
+  tipo,
 });
 
 export const loginAction = (email, password) => ({

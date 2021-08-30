@@ -10,9 +10,10 @@ import { useDispatch } from 'react-redux';
 import Title from '../components/Title';
 import CustomInput from '../components/Input';
 import CustomButton from '../components/Button';
-import { StatusBar } from 'expo-status-bar';
 import { t } from '../lang/IMLocalized';
 import { signUpAction } from '../store/actions';
+import Colors from '../constants/Colors';
+import SwitchSelector from 'react-native-switch-selector';
 
 const RegisterScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [selectedOption, setSelectedOption] = useState('musicos');
 
   const validateForm = () => {
     if (!usuario || !email || !password || !repeatPassword) {
@@ -36,15 +38,29 @@ const RegisterScreen = ({ navigation }) => {
 
   const signUp = () => {
     if (validateForm()) {
-      dispatch(signUpAction(usuario, email, password));
+      dispatch(signUpAction(usuario, email, password, selectedOption));
     }
   };
 
+  const options = [
+    { label: t('registerScreen.musician'), value: 'musicos' },
+    { label: t('registerScreen.business'), value: 'negocios' },
+  ];
+
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
-      <Title>Regístrate</Title>
-      <StatusBar style='light' />
+      <Title>{t('registerScreen.title')}</Title>
       <View style={styles.inputContainer}>
+        <View style={styles.profileOptions}>
+          <SwitchSelector
+            options={options}
+            initial={0}
+            onPress={(value) => setSelectedOption(value)}
+            selectedColor='black'
+            selectedTextStyle={styles.selectedOption}
+            buttonColor='transparent'
+          />
+        </View>
         <Text>{t('registerScreen.usernameTitle')}</Text>
         <CustomInput
           placeholder={t('registerScreen.usernameExample')}
@@ -106,6 +122,18 @@ export const screenOptions = {
 };
 
 const styles = StyleSheet.create({
+  profileOptions: {
+    alignSelf: 'center',
+    width: '50%',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  selectedOption: {
+    height: 25,
+    borderBottomWidth: 2,
+    borderStyle: 'solid',
+    borderBottomColor: Colors.blue,
+  },
   container: {
     flex: 1,
     alignItems: 'center',

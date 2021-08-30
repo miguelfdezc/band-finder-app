@@ -11,9 +11,9 @@ const API_BASE_PATH = Constants.manifest.extra.apiBasePath;
 
 function* signUp(action) {
   try {
-    const { usuario, email, password } = action;
+    const { usuario, email, password, tipo } = action;
     yield call(() =>
-      axios.post(`${API_BASE_PATH}/users/musicos`, {
+      axios.post(`${API_BASE_PATH}/users/${tipo}`, {
         usuario,
         email,
         password,
