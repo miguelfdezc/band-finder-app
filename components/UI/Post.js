@@ -10,6 +10,7 @@ import {
   Share,
   Modal,
 } from 'react-native';
+import { t } from '../../lang/IMLocalized';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
@@ -48,8 +49,7 @@ const Post = ({ data }) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
+        message: t('post.share'),
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -72,9 +72,7 @@ const Post = ({ data }) => {
           animationType='fade'
           transparent={true}
           visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}
+          onRequestClose={() => {}}
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
@@ -92,7 +90,7 @@ const Post = ({ data }) => {
                 }}
               >
                 <Ionicons name='build' size={24} color='#ffc107' />
-                <Text style={{ color: '#ffc107' }}>Editar</Text>
+                <Text style={{ color: '#ffc107' }}>{t('post.edit')}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -107,7 +105,7 @@ const Post = ({ data }) => {
                 onPress={() => dispatch(deletePostAction(id, authUser.uid))}
               >
                 <Ionicons name='trash' size={24} color='red' />
-                <Text style={{ color: 'red' }}>Eliminar</Text>
+                <Text style={{ color: 'red' }}>{t('post.delete')}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -122,7 +120,7 @@ const Post = ({ data }) => {
                 }}
               >
                 <Ionicons name='close' size={24} color='black' />
-                <Text style={{ color: 'black' }}>Salir</Text>
+                <Text style={{ color: 'black' }}>{t('post.exit')}</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -147,7 +145,6 @@ const Post = ({ data }) => {
             source={{
               uri: video,
             }}
-            // shouldPlay
             useNativeControls
             resizeMode='cover'
             isLooping

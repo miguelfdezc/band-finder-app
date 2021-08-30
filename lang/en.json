@@ -20,6 +20,9 @@
     "redirectRegister": "Sign Up"
   },
   "registerScreen": {
+    "title": "Sign Up",
+    "musician": "Musician",
+    "business": "Business",
     "usernameTitle": "username",
     "usernameExample": "user123",
     "emailTitle": "email",
@@ -30,8 +33,58 @@
     "ctaLogin": "Do you already have an account?",
     "redirectLogin": "Sign In"
   },
+  "profileScreen": {
+    "locationExample": "City, Country",
+    "musician": "Musician",
+    "business": "Business",
+    "followers": "fans",
+    "descriptionExample": "Description text...",
+    "posts": "My posts",
+    "events": "My events",
+    "liked": "Liked",
+    "lists": "Lists"
+  },
+  "editProfileScreen": {
+    "title": "Edit Profile",
+    "usernameTitle": "Username",
+    "usernameExample": "user123",
+    "nameTitle": "Name",
+    "nameExample": "Name Surname",
+    "locationTitle": "Location",
+    "locationExample": "City, Country",
+    "descriptionTitle": "Description",
+    "descriptionExample": "Description text...",
+    "phoneTitle": "Phone number",
+    "phoneExample": "+34 123 456 789"
+  },
+  "createPostScreen": {
+    "title": "Create Post",
+    "descriptionTitle": "Description",
+    "descriptionExample": "Description text..."
+  },
+  "editPostScreen": {
+    "title": "Edit Post",
+    "descriptionTitle": "Description",
+    "descriptionExample": "Description text..."
+  },
+  "post": {
+    "share": "Thank you for sharing the post!",
+    "edit": "Edit",
+    "delete": "Delete",
+    "exit": "Exit"
+  },
+  "globals": {
+    "cancelBtn": "Cancel",
+    "createBtn": "Create",
+    "saveBtn": "Save",
+    "uploadImage": "Upload image",
+    "uploadVideo": "Upload video",
+    "changeBackground": "Upload banner",
+    "changeIcon": "Upload icon"
+  },
   "validations": {
     "emptyFields": "Error: there are empty fields in the form",
-    "passwordRepeat": "Error: introduced passwords don't match"
+    "passwordRepeat": "Error: introduced passwords don't match",
+    "network": "Error: no se ha podido conectar con la red"
   }
 }

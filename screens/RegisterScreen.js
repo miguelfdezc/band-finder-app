@@ -43,13 +43,13 @@ const RegisterScreen = ({ navigation }) => {
   };
 
   const options = [
-    { label: 'Músic@', value: 'musicos' },
-    { label: 'Negocio', value: 'negocios' },
+    { label: t('registerScreen.musician'), value: 'musicos' },
+    { label: t('registerScreen.business'), value: 'negocios' },
   ];
 
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
-      <Title>Regístrate</Title>
+      <Title>{t('registerScreen.title')}</Title>
       <View style={styles.inputContainer}>
         <View style={styles.profileOptions}>
           <SwitchSelector
