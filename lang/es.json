@@ -20,6 +20,9 @@
     "redirectRegister": "Regístrate"
   },
   "registerScreen": {
+    "title": "Regístrate",
+    "musician": "Músic@",
+    "business": "Negocio",
     "usernameTitle": "usuario",
     "usernameExample": "usuario123",
     "emailTitle": "email",
@@ -30,8 +33,58 @@
     "ctaLogin": "¿Ya tienes una cuenta?",
     "redirectLogin": "Iniciar sesión"
   },
+  "profileScreen": {
+    "locationExample": "Ciudad, País",
+    "musician": "Músic@",
+    "business": "Negocio",
+    "followers": "fans",
+    "descriptionExample": "Texto de descripción...",
+    "posts": "Mis publicaciones",
+    "events": "Mis eventos",
+    "liked": "Me gusta",
+    "lists": "Listas"
+  },
+  "editProfileScreen": {
+    "title": "Editar Perfil",
+    "usernameTitle": "Usuario",
+    "usernameExample": "usuario123",
+    "nameTitle": "Nombre",
+    "nameExample": "Nombre Apellidos",
+    "locationTitle": "Ubicación",
+    "locationExample": "Ciudad, País",
+    "descriptionTitle": "Descripción",
+    "descriptionExample": "Texto de descripción...",
+    "phoneTitle": "Teléfono",
+    "phoneExample": "+34 123 456 789"
+  },
+  "createPostScreen": {
+    "title": "Crear Publicación",
+    "descriptionTitle": "Descripción",
+    "descriptionExample": "Texto de descripción..."
+  },
+  "editPostScreen": {
+    "title": "Editar Publicación",
+    "descriptionTitle": "Descripción",
+    "descriptionExample": "Texto de descripción..."
+  },
+  "post": {
+    "share": "¡Gracias por compartir la publicación!",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "exit": "Salir"
+  },
+  "globals": {
+    "cancelBtn": "Cancelar",
+    "createBtn": "Crear",
+    "saveBtn": "Guardar",
+    "uploadImage": "Subir imagen",
+    "uploadVideo": "Subir vídeo",
+    "changeBackground": "Cambiar fondo",
+    "changeIcon": "Cambiar icono"
+  },
   "validations": {
     "emptyFields": "Error: hay campos vacíos en el formulario",
-    "passwordRepeat": "Error: las contraseñas no coinciden"
+    "passwordRepeat": "Error: las contraseñas no coinciden",
+    "network": "Error: network request failed"
   }
 }
