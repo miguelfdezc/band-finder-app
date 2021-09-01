@@ -4,7 +4,8 @@
     "register": "Sign Up",
     "home": "Home",
     "profile": "Profile",
-    "editProfile": "Edit Profile"
+    "editProfile": "Edit Profile",
+    "events": "Events"
   },
   "menuOptions": {
     "goBack": "Go Back",
@@ -66,6 +67,9 @@
     "title": "Edit Post",
     "descriptionTitle": "Description",
     "descriptionExample": "Description text..."
+  },
+  "eventsScreen": {
+    "title": "Events"
   },
   "post": {
     "share": "Thank you for sharing the post!",

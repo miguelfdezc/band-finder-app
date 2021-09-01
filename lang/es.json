@@ -4,7 +4,8 @@
     "register": "Registro",
     "home": "Inicio",
     "profile": "Perfil",
-    "editProfile": "Editar Perfil"
+    "editProfile": "Editar Perfil",
+    "events": "Eventos"
   },
   "menuOptions": {
     "goBack": "Volver",
@@ -66,6 +67,9 @@
     "title": "Editar Publicación",
     "descriptionTitle": "Descripción",
     "descriptionExample": "Texto de descripción..."
+  },
+  "eventsScreen": {
+    "title": "Eventos"
   },
   "post": {
     "share": "¡Gracias por compartir la publicación!",

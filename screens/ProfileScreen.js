@@ -79,7 +79,7 @@ const ProfileScreen = (props) => {
             <Text style={styles.descripcion}>
               {currentUser.descripcion.length > 0
                 ? currentUser.descripcion
-                : t('profileScreen.descripTionExample')}
+                : t('profileScreen.descriptionExample')}
             </Text>
             <View style={styles.profileOptions}>
               <View style={styles.selectedOption}>
