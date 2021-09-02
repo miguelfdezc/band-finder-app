@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   container: {
+    flex: 1,
     // height: 400,
     borderBottomWidth: 1,
     borderBottomColor: Colors.grey,

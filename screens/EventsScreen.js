@@ -35,7 +35,11 @@ const EventsScreen = (props) => {
     <View style={{ margin: 0, backgroundColor: 'white', height: '100%' }}>
       <Title style={styles.title}>{t('eventsScreen.title')}</Title>
       <View>
-        <FlatList data={events} renderItem={(item) => <Event data={item} />} />
+        <FlatList
+          contentContainerStyle={{ paddingBottom: 100 }}
+          data={events}
+          renderItem={(item) => <Event data={item} />}
+        />
       </View>
     </View>
   );
@@ -47,7 +51,7 @@ export const screenOptions = (navData) => {
   const currentUser = useSelector((state) => state.user.currentUser);
   return currentUser.customClaims.type === 'negocios'
     ? NavBar(navData, true, 'Add', 'add', Ionicons, () => {
-        // navData.navigation.navigate('CreateEventScreen');
+        navData.navigation.navigate('CreateEvent');
       })
     : NavBar(navData, true, 'Events', 'calendar-outline', Ionicons, () => {});
 };

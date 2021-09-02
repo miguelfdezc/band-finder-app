@@ -3,6 +3,7 @@ import axios from 'axios';
 import { getEventsActionSuccess } from '../actions';
 import { EventActionTypes } from '../types/event';
 import Constants from 'expo-constants';
+import * as RootNavigation from '../../navigation/RootNavigation';
 
 const API_BASE_PATH = Constants.manifest.extra.apiBasePath;
 
@@ -16,6 +17,20 @@ function* getEvents() {
   }
 }
 
+function* createEvent(action) {
+  try {
+    const { data } = action;
+    yield call(axios.post, `${API_BASE_PATH}/events`, data);
+    yield call(() => RootNavigation.navigate('Events'));
+  } catch (error) {
+    if (error.response.data.message) Alert.alert(error.response.data.message);
+    else Alert.alert(`ERROR: ${error.message}`);
+  }
+}
+
 export function* eventSaga() {
-  yield all([takeLatest(EventActionTypes.GET_EVENTS, getEvents)]);
+  yield all([
+    takeLatest(EventActionTypes.GET_EVENTS, getEvents),
+    takeLatest(EventActionTypes.CREATE_EVENT, createEvent),
+  ]);
 }

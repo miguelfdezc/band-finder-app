@@ -29,6 +29,9 @@ import EditPostScreen, {
 import EventsScreen, {
   screenOptions as eventsScreenOptions,
 } from '../screens/EventsScreen';
+import CreateEventScreen, {
+  screenOptions as createEventScreenOptions,
+} from '../screens/CreateEventScreen';
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
@@ -97,6 +100,11 @@ export const EventsNavigator = () => {
         name='Events'
         component={EventsScreen}
         options={eventsScreenOptions}
+      />
+      <EventsStackNavigator.Screen
+        name='CreateEvent'
+        component={CreateEventScreen}
+        options={createEventScreenOptions}
       />
     </EventsStackNavigator.Navigator>
   );

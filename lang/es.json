@@ -71,6 +71,15 @@
   "eventsScreen": {
     "title": "Eventos"
   },
+  "createEventScreen": {
+    "title": "Nuevo evento",
+    "titleTitle": "Título",
+    "titleExample": "Título del evento",
+    "locationTitle": "Ubicación",
+    "locationExample": "Ciudad, País",
+    "descriptionTitle": "Descripción",
+    "descriptionExample": "Texto de descripción..."
+  },
   "post": {
     "share": "¡Gracias por compartir la publicación!",
     "edit": "Editar",

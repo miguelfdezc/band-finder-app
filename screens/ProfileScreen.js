@@ -100,6 +100,7 @@ const ProfileScreen = (props) => {
               <FlatList
                 data={posts}
                 renderItem={(item) => <Post data={item} />}
+                contentContainerStyle={{ paddingBottom: 620 }}
               />
             </View>
           </View>
