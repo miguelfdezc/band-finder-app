@@ -71,6 +71,15 @@
   "eventsScreen": {
     "title": "Events"
   },
+  "eventScreen": {
+    "assistants": "assistants",
+    "subscribe": "Subscribe",
+    "unsubscribe": "Unsubscribe",
+    "punctual": "punctual",
+    "daily": "daily",
+    "weekly": "weekly",
+    "monthly": "monthly"
+  },
   "createEventScreen": {
     "title": "New event",
     "titleTitle": "Title",

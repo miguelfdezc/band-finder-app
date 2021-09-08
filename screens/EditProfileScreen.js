@@ -195,7 +195,7 @@ const EditProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
         <CustomButton
           onPress={() => dispatch(editUserAction(currentUser.uid, editUser))}
-          title={t('globals.cancelBtn')}
+          title={t('globals.saveBtn')}
         />
       </View>
       <View style={{ height: 100 }} />

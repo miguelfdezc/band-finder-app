@@ -12,6 +12,7 @@ import {
 import { PostActionTypes } from '../types/post';
 import * as RootNavigation from '../../navigation/RootNavigation';
 import Constants from 'expo-constants';
+import { Alert } from 'react-native';
 
 const API_BASE_PATH = Constants.manifest.extra.apiBasePath;
 

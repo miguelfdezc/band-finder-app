@@ -6,8 +6,12 @@ import Colors from '../../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
+import { getEventAction } from '../../store/actions';
 
 const Event = ({ data }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const {
     id,
     fechaFin,
@@ -33,11 +37,16 @@ const Event = ({ data }) => {
       <View style={styles.info}>
         <View style={styles.header}>
           <Text style={styles.title}>{titulo}</Text>
-          <Feather name='send' size={22} color='black' />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Event', { id });
+            }}
+          >
+            <Feather name='send' size={22} color='black' />
+          </TouchableOpacity>
         </View>
         <Text style={styles.dateTime}>
-          {moment(fechaInicio).format('DD')} de{' '}
-          {moment(fechaInicio).format('MMM')}{' '}
+          {moment(fechaInicio).format('DD')} {moment(fechaInicio).format('MMM')}
           {moment(horaInicio).format('HH:mm')}
         </Text>
         <Text numberOfLines={2} ellipsizeMode='tail' style={styles.description}>
