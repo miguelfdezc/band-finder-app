@@ -4,7 +4,8 @@
     "register": "Sign Up",
     "home": "Home",
     "profile": "Profile",
-    "editProfile": "Edit Profile"
+    "editProfile": "Edit Profile",
+    "events": "Events"
   },
   "menuOptions": {
     "goBack": "Go Back",
@@ -64,6 +65,27 @@
   },
   "editPostScreen": {
     "title": "Edit Post",
+    "descriptionTitle": "Description",
+    "descriptionExample": "Description text..."
+  },
+  "eventsScreen": {
+    "title": "Events"
+  },
+  "eventScreen": {
+    "assistants": "assistants",
+    "subscribe": "Subscribe",
+    "unsubscribe": "Unsubscribe",
+    "punctual": "punctual",
+    "daily": "daily",
+    "weekly": "weekly",
+    "monthly": "monthly"
+  },
+  "createEventScreen": {
+    "title": "New event",
+    "titleTitle": "Title",
+    "titleExample": "Title of the event",
+    "locationTitle": "Location",
+    "locationExample": "City, Country",
     "descriptionTitle": "Description",
     "descriptionExample": "Description text..."
   },

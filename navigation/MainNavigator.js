@@ -26,6 +26,15 @@ import CreatePostScreen, {
 import EditPostScreen, {
   screenOptions as editPostScreenOptions,
 } from '../screens/EditPostScreen';
+import EventsScreen, {
+  screenOptions as eventsScreenOptions,
+} from '../screens/EventsScreen';
+import CreateEventScreen, {
+  screenOptions as createEventScreenOptions,
+} from '../screens/CreateEventScreen';
+import EventScreen, {
+  screenOptions as eventScreenOptions,
+} from '../screens/EventScreen';
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
@@ -75,29 +84,37 @@ export const ProfileNavigator = () => {
         name='Profile'
         component={ProfileScreen}
         options={profileScreenOptions}
-        /* options={{
-          headerTitle: (props) => (
-            <NavBar
-              icons='SimpleLineIcons'
-              icon='pencil'
-              onPress={() => RootNavigation.navigate('EditProfile')}
-              {...props}
-            />
-          ),
-        }} */
       />
       <ProfileStackNavigator.Screen
         name='EditProfile'
         component={EditProfileScreen}
         options={editProfileScreenOptions}
-        /* options={{
-          headerShown: true,
-          headerTitle: (props) => (
-            <NavBar type='goBack' icons='Ionicons' icon='search' {...props} />
-          ),
-        }} */
       />
     </ProfileStackNavigator.Navigator>
+  );
+};
+
+const EventsStackNavigator = createStackNavigator();
+
+export const EventsNavigator = () => {
+  return (
+    <EventsStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <EventsStackNavigator.Screen
+        name='Events'
+        component={EventsScreen}
+        options={eventsScreenOptions}
+      />
+      <EventsStackNavigator.Screen
+        name='CreateEvent'
+        component={CreateEventScreen}
+        options={createEventScreenOptions}
+      />
+      <EventsStackNavigator.Screen
+        name='Event'
+        component={EventScreen}
+        options={eventScreenOptions}
+      />
+    </EventsStackNavigator.Navigator>
   );
 };
 
@@ -129,6 +146,16 @@ export const MenuNavigator = () => {
             <Ionicons name='person-outline' size={24} color='#1B141F' />
           ),
           drawerLabel: t('screenTitles.profile'),
+        }}
+      />
+      <MenuDrawerNavigator.Screen
+        name='EventsNavigator'
+        component={EventsNavigator}
+        options={{
+          drawerIcon: () => (
+            <Ionicons name='calendar-outline' size={24} color='#1B141F' />
+          ),
+          drawerLabel: t('screenTitles.events'),
         }}
       />
     </MenuDrawerNavigator.Navigator>

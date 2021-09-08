@@ -4,7 +4,8 @@
     "register": "Registro",
     "home": "Inicio",
     "profile": "Perfil",
-    "editProfile": "Editar Perfil"
+    "editProfile": "Editar Perfil",
+    "events": "Eventos"
   },
   "menuOptions": {
     "goBack": "Volver",
@@ -64,6 +65,27 @@
   },
   "editPostScreen": {
     "title": "Editar Publicación",
+    "descriptionTitle": "Descripción",
+    "descriptionExample": "Texto de descripción..."
+  },
+  "eventsScreen": {
+    "title": "Eventos"
+  },
+  "eventScreen": {
+    "assistants": "asistentes",
+    "subscribe": "Voy",
+    "unsubscribe": "No voy",
+    "punctual": "puntual",
+    "daily": "diario",
+    "weekly": "semanal",
+    "monthly": "mensual"
+  },
+  "createEventScreen": {
+    "title": "Nuevo evento",
+    "titleTitle": "Título",
+    "titleExample": "Título del evento",
+    "locationTitle": "Ubicación",
+    "locationExample": "Ciudad, País",
     "descriptionTitle": "Descripción",
     "descriptionExample": "Texto de descripción..."
   },

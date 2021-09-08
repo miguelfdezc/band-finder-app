@@ -9,13 +9,18 @@ import {
 } from 'react-native';
 import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
-import { getPostsUserAction, getUserAction } from '../store/actions';
+import {
+  getEventsUserAction,
+  getPostsUserAction,
+  getUserAction,
+} from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
 import Colors from '../constants/Colors';
 import { useIsFocused } from '@react-navigation/native';
 import Post from '../components/UI/Post';
+import Event from '../components/UI/Event';
 
 const ProfileScreen = (props) => {
   const dispatch = useDispatch();
@@ -24,17 +29,22 @@ const ProfileScreen = (props) => {
   const authUser = useSelector((state) => state.auth.authUser);
   const currentUser = useSelector((state) => state.user.currentUser);
   const posts = useSelector((state) => state.post.publicaciones);
+  const events = useSelector((state) => state.event.eventosUsuario);
   const [isCurrentUser, setIsCurrentUser] = useState(false);
 
   useEffect(() => {
-    if (isFocused) {
-      dispatch(getUserAction(authUser.uid));
-      dispatch(getPostsUserAction(authUser.uid));
-    }
+    if (isFocused) dispatch(getUserAction(authUser.uid));
   }, [props, isFocused]);
 
   useEffect(() => {
     setIsCurrentUser(currentUser && Object.keys(currentUser).length !== 0);
+    if (currentUser && Object.keys(currentUser).length !== 0) {
+      dispatch(
+        currentUser.customClaims.type === 'musicos'
+          ? getPostsUserAction(authUser.uid)
+          : getEventsUserAction(authUser.uid, authUser.uid)
+      );
+    }
   }, [currentUser]);
 
   return (
@@ -79,7 +89,7 @@ const ProfileScreen = (props) => {
             <Text style={styles.descripcion}>
               {currentUser.descripcion.length > 0
                 ? currentUser.descripcion
-                : t('profileScreen.descripTionExample')}
+                : t('profileScreen.descriptionExample')}
             </Text>
             <View style={styles.profileOptions}>
               <View style={styles.selectedOption}>
@@ -98,8 +108,17 @@ const ProfileScreen = (props) => {
             </View>
             <View>
               <FlatList
-                data={posts}
-                renderItem={(item) => <Post data={item} />}
+                data={
+                  currentUser.customClaims.type === 'musicos' ? posts : events
+                }
+                renderItem={(item) =>
+                  currentUser.customClaims.type === 'musicos' ? (
+                    <Post data={item} />
+                  ) : (
+                    <Event data={item} />
+                  )
+                }
+                contentContainerStyle={{ paddingBottom: 620 }}
               />
             </View>
           </View>
