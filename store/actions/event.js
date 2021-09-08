@@ -26,6 +26,12 @@ export const getEventsSubscribedAction = (uid) => ({
   uid,
 });
 
+export const getEventsUserAction = (id, uid) => ({
+  type: EventActionTypes.GET_EVENTS_USER,
+  id,
+  uid,
+});
+
 export const getEventsActionSuccess = (data) => ({
   type: EventActionTypes.GET_EVENTS_SUCCESS,
   data,
@@ -48,5 +54,10 @@ export const updateSubscribedActionSuccess = (data) => ({
 
 export const getEventsSubscribedActionSuccess = (data) => ({
   type: EventActionTypes.GET_EVENTS_SUBSCRIBED_SUCCESS,
+  data,
+});
+
+export const getEventsUserActionSuccess = (data) => ({
+  type: EventActionTypes.GET_EVENTS_USER_SUCCESS,
   data,
 });

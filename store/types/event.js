@@ -9,6 +9,8 @@ export const EventActionTypes = {
   UPDATE_SUBSCRIBED_SUCCESS: 'UPDATE_SUBSCRIBED_SUCCESS',
   GET_EVENTS_SUBSCRIBED: 'GET_EVENTS_SUBSCRIBED',
   GET_EVENTS_SUBSCRIBED_SUCCESS: 'GET_EVENTS_SUBSCRIBED_SUCCESS',
+  GET_EVENTS_USER: 'GET_EVENTS_USER',
+  GET_EVENTS_USER_SUCCESS: 'GET_EVENTS_USER_SUCCESS',
 };
 
 export const EventDefaultState = () => ({
@@ -26,4 +28,5 @@ export const EventDefaultState = () => ({
     ubicacion: '',
   },
   eventosSuscrito: [],
+  eventosUsuario: [],
 });

@@ -8,6 +8,8 @@ export const eventReducer = (state = EventDefaultState(), action) => {
       return { ...state, evento: action.data };
     case EventActionTypes.GET_EVENTS_SUBSCRIBED_SUCCESS:
       return { ...state, eventosSuscrito: action.data };
+    case EventActionTypes.GET_EVENTS_USER_SUCCESS:
+      return { ...state, eventosUsuario: action.data };
     default:
       return state;
   }

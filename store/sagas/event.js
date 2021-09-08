@@ -5,6 +5,7 @@ import {
   getEventActionSuccess,
   updateSubscribedActionSuccess,
   getEventsSubscribedActionSuccess,
+  getEventsUserActionSuccess,
 } from '../actions';
 import { EventActionTypes } from '../types/event';
 import Constants from 'expo-constants';
@@ -78,6 +79,20 @@ function* getEventsSubscribed(action) {
   }
 }
 
+function* getEventsUser(action) {
+  try {
+    const { id, uid } = action;
+    const response = yield call(
+      axios.get,
+      `${API_BASE_PATH}/events/user/${id}?uid=${uid}`
+    );
+    yield put(getEventsUserActionSuccess(response.data.events));
+  } catch (error) {
+    if (error.response.data.message) Alert.alert(error.response.data.message);
+    else Alert.alert(`ERROR: ${error.message}`);
+  }
+}
+
 export function* eventSaga() {
   yield all([
     takeLatest(EventActionTypes.GET_EVENTS, getEvents),
@@ -85,5 +100,6 @@ export function* eventSaga() {
     takeLatest(EventActionTypes.GET_EVENT, getEvent),
     takeLatest(EventActionTypes.UPDATE_SUBSCRIBED, updateSubscribed),
     takeLatest(EventActionTypes.GET_EVENTS_SUBSCRIBED, getEventsSubscribed),
+    takeLatest(EventActionTypes.GET_EVENTS_USER, getEventsUser),
   ]);
 }
