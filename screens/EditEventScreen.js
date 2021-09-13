@@ -24,15 +24,21 @@ import * as ImagePicker from 'expo-image-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { storage } from '../config';
 import moment from 'moment';
-import { createEventAction } from '../store/actions';
+import {
+  createEventAction,
+  getEventAction,
+  updateEventAction,
+} from '../store/actions';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
-const CreateEventScreen = ({ navigation }) => {
+const EditEventScreen = ({ route, navigation }) => {
+  const { id } = route.params;
   const dispatch = useDispatch();
 
   const authUser = useSelector((state) => state.auth.authUser);
   const currentUser = useSelector((state) => state.user.currentUser);
+  const editEvent = useSelector((state) => state.event.evento);
   const [event, setEvent] = useState({
     titulo: '',
     tipo: 'puntual',
@@ -50,11 +56,24 @@ const CreateEventScreen = ({ navigation }) => {
   const [showEndHour, setShowEndHour] = useState(false);
 
   useEffect(() => {
-    setEvent({
-      ...event,
-      usuario: authUser.uid,
-    });
+    dispatch(getEventAction(id));
   }, []);
+
+  useEffect(() => {
+    setEvent({
+      id: editEvent.id,
+      usuario: authUser.uid,
+      titulo: editEvent.titulo,
+      tipo: editEvent.tipo,
+      imagen: editEvent.imagen,
+      ubicacion: editEvent.ubicacion,
+      descripcion: editEvent.descripcion,
+      fechaInicio: new Date(editEvent.fechaInicio),
+      fechaFin: new Date(editEvent.fechaFin),
+      horaInicio: new Date(editEvent.horaInicio),
+      horaFin: new Date(editEvent.horaFin),
+    });
+  }, [editEvent]);
 
   const uploadFile = async () => {
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -92,7 +111,7 @@ const CreateEventScreen = ({ navigation }) => {
   return (
     <ScrollView style={{ margin: 0, backgroundColor: 'white', height: '100%' }}>
       <View style={styles.title}>
-        <Title>{t('createEventScreen.title')}</Title>
+        <Title>{t('editEventScreen.title')}</Title>
       </View>
       <View style={styles.profileImgContainer}>
         {event.imagen !== '' && (
@@ -265,8 +284,8 @@ const CreateEventScreen = ({ navigation }) => {
           <Text style={styles.blueText}>{t('globals.cancelBtn')}</Text>
         </TouchableOpacity>
         <CustomButton
-          onPress={() => dispatch(createEventAction(event))}
-          title={t('globals.createBtn')}
+          onPress={() => dispatch(updateEventAction(event.id, event))}
+          title='Guardar'
         />
       </View>
       <View style={{ height: 100 }} />
@@ -274,7 +293,7 @@ const CreateEventScreen = ({ navigation }) => {
   );
 };
 
-export default CreateEventScreen;
+export default EditEventScreen;
 
 export const screenOptions = (navData) =>
   NavBar(navData, false, 'Events', 'calendar-outline', Ionicons, () => {});

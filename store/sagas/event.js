@@ -6,6 +6,8 @@ import {
   updateSubscribedActionSuccess,
   getEventsSubscribedActionSuccess,
   getEventsUserActionSuccess,
+  updateEventActionSuccess,
+  deleteEventActionSuccess,
 } from '../actions';
 import { EventActionTypes } from '../types/event';
 import Constants from 'expo-constants';
@@ -93,6 +95,35 @@ function* getEventsUser(action) {
   }
 }
 
+function* updateEvent(action) {
+  try {
+    const { id, data } = action;
+    const response = yield call(
+      axios.put,
+      `${API_BASE_PATH}/events/${id}`,
+      data
+    );
+    yield put(updateEventActionSuccess(response.data.event));
+  } catch (error) {
+    if (error.response.data.message) Alert.alert(error.response.data.message);
+    else Alert.alert(`ERROR: ${error.message}`);
+  }
+}
+
+function* deleteEvent(action) {
+  try {
+    const { id, uid } = action;
+    const response = yield call(
+      axios.delete,
+      `${API_BASE_PATH}/events/${id}?uid=${uid}`
+    );
+    yield put(deleteEventActionSuccess(response.data));
+  } catch (error) {
+    if (error.response.data.message) Alert.alert(error.response.data.message);
+    else Alert.alert(`ERROR: ${error.message}`);
+  }
+}
+
 export function* eventSaga() {
   yield all([
     takeLatest(EventActionTypes.GET_EVENTS, getEvents),
@@ -101,5 +132,7 @@ export function* eventSaga() {
     takeLatest(EventActionTypes.UPDATE_SUBSCRIBED, updateSubscribed),
     takeLatest(EventActionTypes.GET_EVENTS_SUBSCRIBED, getEventsSubscribed),
     takeLatest(EventActionTypes.GET_EVENTS_USER, getEventsUser),
+    takeLatest(EventActionTypes.UPDATE_EVENT, updateEvent),
+    takeLatest(EventActionTypes.DELETE_EVENT, deleteEvent),
   ]);
 }

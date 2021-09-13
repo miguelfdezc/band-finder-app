@@ -35,6 +35,9 @@ import CreateEventScreen, {
 import EventScreen, {
   screenOptions as eventScreenOptions,
 } from '../screens/EventScreen';
+import EditEventScreen, {
+  screenOptions as editEventScreenOptions,
+} from '../screens/EditEventScreen';
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
@@ -113,6 +116,11 @@ export const EventsNavigator = () => {
         name='Event'
         component={EventScreen}
         options={eventScreenOptions}
+      />
+      <HomeStackNavigator.Screen
+        name='EditEvent'
+        component={EditEventScreen}
+        options={editEventScreenOptions}
       />
     </EventsStackNavigator.Navigator>
   );

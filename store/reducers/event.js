@@ -10,6 +10,17 @@ export const eventReducer = (state = EventDefaultState(), action) => {
       return { ...state, eventosSuscrito: action.data };
     case EventActionTypes.GET_EVENTS_USER_SUCCESS:
       return { ...state, eventosUsuario: action.data };
+    case EventActionTypes.UPDATE_EVENT_SUCCESS:
+      eventos = state.eventos;
+      eventos = eventos.map((value) => {
+        if (value.id === action.data.id) value = action.data;
+        return value;
+      });
+      return { ...state, eventos, evento: action.data };
+    case EventActionTypes.DELETE_EVENT_SUCCESS:
+      eventos = state.eventos;
+      eventos = eventos.filter((value) => value.id !== action.data.id);
+      return { ...state, eventos };
     default:
       return state;
   }

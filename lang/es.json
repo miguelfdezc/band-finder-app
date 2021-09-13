@@ -87,18 +87,23 @@
     "locationTitle": "Ubicación",
     "locationExample": "Ciudad, País",
     "descriptionTitle": "Descripción",
-    "descriptionExample": "Texto de descripción..."
+    "descriptionExample": "Texto de descripción...",
+    "initDateTime": "Fecha y hora Inicio",
+    "endDateTime": "Fecha y hora Fin"
+  },
+  "editEventScreen": {
+    "title": "Editar Evento"
   },
   "post": {
-    "share": "¡Gracias por compartir la publicación!",
-    "edit": "Editar",
-    "delete": "Eliminar",
-    "exit": "Salir"
+    "share": "¡Gracias por compartir la publicación!"
   },
   "globals": {
     "cancelBtn": "Cancelar",
     "createBtn": "Crear",
     "saveBtn": "Guardar",
+    "editBtn": "Editar",
+    "deleteBtn": "Eliminar",
+    "exitBtn": "Salir",
     "uploadImage": "Subir imagen",
     "uploadVideo": "Subir vídeo",
     "changeBackground": "Cambiar fondo",
