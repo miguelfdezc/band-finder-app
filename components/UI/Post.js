@@ -86,11 +86,12 @@ const Post = ({ data }) => {
                   alignItems: 'center',
                 }}
                 onPress={() => {
+                  setModalVisible(false);
                   navigation.navigate('EditPost', { id });
                 }}
               >
                 <Ionicons name='build' size={24} color='#ffc107' />
-                <Text style={{ color: '#ffc107' }}>{t('post.edit')}</Text>
+                <Text style={{ color: '#ffc107' }}>{t('globals.editBtn')}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -105,7 +106,7 @@ const Post = ({ data }) => {
                 onPress={() => dispatch(deletePostAction(id, authUser.uid))}
               >
                 <Ionicons name='trash' size={24} color='red' />
-                <Text style={{ color: 'red' }}>{t('post.delete')}</Text>
+                <Text style={{ color: 'red' }}>{t('globals.deleteBtn')}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -120,7 +121,7 @@ const Post = ({ data }) => {
                 }}
               >
                 <Ionicons name='close' size={24} color='black' />
-                <Text style={{ color: 'black' }}>{t('post.exit')}</Text>
+                <Text style={{ color: 'black' }}>{t('globals.exitBtn')}</Text>
               </TouchableOpacity>
             </View>
           </View>

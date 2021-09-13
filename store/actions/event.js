@@ -32,6 +32,18 @@ export const getEventsUserAction = (id, uid) => ({
   uid,
 });
 
+export const updateEventAction = (id, data) => ({
+  type: EventActionTypes.UPDATE_EVENT,
+  id,
+  data,
+});
+
+export const deleteEventAction = (id, uid) => ({
+  type: EventActionTypes.DELETE_EVENT,
+  id,
+  uid,
+});
+
 export const getEventsActionSuccess = (data) => ({
   type: EventActionTypes.GET_EVENTS_SUCCESS,
   data,
@@ -59,5 +71,15 @@ export const getEventsSubscribedActionSuccess = (data) => ({
 
 export const getEventsUserActionSuccess = (data) => ({
   type: EventActionTypes.GET_EVENTS_USER_SUCCESS,
+  data,
+});
+
+export const updateEventActionSuccess = (data) => ({
+  type: EventActionTypes.UPDATE_EVENT_SUCCESS,
+  data,
+});
+
+export const deleteEventActionSuccess = (data) => ({
+  type: EventActionTypes.DELETE_EVENT_SUCCESS,
   data,
 });

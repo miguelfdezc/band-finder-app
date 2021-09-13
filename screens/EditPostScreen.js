@@ -176,18 +176,6 @@ const EditPostScreen = ({ route, navigation }) => {
   );
 };
 
-/* 
-
-  "usuario": "musico1",
-  "displayName": "Jane Doe",
-  "ubicacion": "Mi caaaaasa",
-  "descripcion": "Descripcion editada...",
-  "phoneNumber": "+11234567890",
-  "photoURL": "http://www.example.com/12345678/photo.png",
-  "imagenFondo": "https://via.placeholder.com/100x100.png?text=Imagen+Fondo",
-
-*/
-
 export default EditPostScreen;
 
 export const screenOptions = (navData) =>
