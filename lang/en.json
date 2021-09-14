@@ -5,7 +5,8 @@
     "home": "Home",
     "profile": "Profile",
     "editProfile": "Edit Profile",
-    "events": "Events"
+    "events": "Events",
+    "bands": "Bands"
   },
   "menuOptions": {
     "goBack": "Go Back",
@@ -92,7 +93,15 @@
     "endDateTime": "Date & time End"
   },
   "editEventScreen": {
-    "title": "Editar Evento"
+    "title": "Edit Event",
+    "locationTitle": "Location",
+    "locationExample": "City, Country",
+    "genreTitle": "Genre",
+    "genreExample": "rock, pop, jazz...",
+    "createBand": "Create your band!"
+  },
+  "bandsScreen": {
+    "title": "Find Band"
   },
   "post": {
     "share": "Thank you for sharing the post!"
@@ -104,6 +113,7 @@
     "editBtn": "Edit",
     "deleteBtn": "Delete",
     "exitBtn": "Exit",
+    "searchBtn": "Search",
     "uploadImage": "Upload image",
     "uploadVideo": "Upload video",
     "changeBackground": "Upload banner",

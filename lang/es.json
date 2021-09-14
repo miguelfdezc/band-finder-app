@@ -5,7 +5,8 @@
     "home": "Inicio",
     "profile": "Perfil",
     "editProfile": "Editar Perfil",
-    "events": "Eventos"
+    "events": "Eventos",
+    "bands": "Bandas"
   },
   "menuOptions": {
     "goBack": "Volver",
@@ -94,6 +95,14 @@
   "editEventScreen": {
     "title": "Editar Evento"
   },
+  "bandsScreen": {
+    "title": "Encontrar banda",
+    "locationTitle": "Ubicación",
+    "locationExample": "Ciudad, País",
+    "genreTitle": "Género",
+    "genreExample": "rock, pop, jazz...",
+    "createBand": "¡Crea tu banda!"
+  },
   "post": {
     "share": "¡Gracias por compartir la publicación!"
   },
@@ -104,6 +113,7 @@
     "editBtn": "Editar",
     "deleteBtn": "Eliminar",
     "exitBtn": "Salir",
+    "searchBtn": "Buscar",
     "uploadImage": "Subir imagen",
     "uploadVideo": "Subir vídeo",
     "changeBackground": "Cambiar fondo",
