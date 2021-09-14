@@ -38,6 +38,9 @@ import EventScreen, {
 import EditEventScreen, {
   screenOptions as editEventScreenOptions,
 } from '../screens/EditEventScreen';
+import BandsScreen, {
+  screenOptions as bandsScreenOptions,
+} from '../screens/BandsScreen';
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
@@ -126,6 +129,20 @@ export const EventsNavigator = () => {
   );
 };
 
+const BandsStackNavigator = createStackNavigator();
+
+export const BandsNavigator = () => {
+  return (
+    <BandsStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <BandsStackNavigator.Screen
+        name='Bands'
+        component={BandsScreen}
+        options={bandsScreenOptions}
+      />
+    </BandsStackNavigator.Navigator>
+  );
+};
+
 const MenuDrawerNavigator = createDrawerNavigator();
 
 export const MenuNavigator = () => {
@@ -164,6 +181,16 @@ export const MenuNavigator = () => {
             <Ionicons name='calendar-outline' size={24} color='#1B141F' />
           ),
           drawerLabel: t('screenTitles.events'),
+        }}
+      />
+      <MenuDrawerNavigator.Screen
+        name='BandsNavigator'
+        component={BandsNavigator}
+        options={{
+          drawerIcon: () => (
+            <Ionicons name='people-outline' size={24} color='#1B141F' />
+          ),
+          drawerLabel: t('screenTitles.bands'),
         }}
       />
     </MenuDrawerNavigator.Navigator>
