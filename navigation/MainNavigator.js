@@ -41,6 +41,9 @@ import EditEventScreen, {
 import BandsScreen, {
   screenOptions as bandsScreenOptions,
 } from '../screens/BandsScreen';
+import CreateBandScreen, {
+  screenOptions as createBandScreenOptions,
+} from '../screens/CreateBandScreen';
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
@@ -138,6 +141,11 @@ export const BandsNavigator = () => {
         name='Bands'
         component={BandsScreen}
         options={bandsScreenOptions}
+      />
+      <BandsStackNavigator.Screen
+        name='CreateBand'
+        component={CreateBandScreen}
+        options={createBandScreenOptions}
       />
     </BandsStackNavigator.Navigator>
   );

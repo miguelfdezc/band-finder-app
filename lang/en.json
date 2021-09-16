@@ -93,15 +93,29 @@
     "endDateTime": "Date & time End"
   },
   "editEventScreen": {
-    "title": "Edit Event",
+    "title": "Edit Event"
+  },
+  "bandsScreen": {
+    "title": "Find Band",
     "locationTitle": "Location",
     "locationExample": "City, Country",
     "genreTitle": "Genre",
     "genreExample": "rock, pop, jazz...",
     "createBand": "Create your band!"
   },
-  "bandsScreen": {
-    "title": "Find Band"
+  "createBandScreen": {
+    "acceptBtn": "Confirm",
+    "title": "New band",
+    "nameTitle": "Name",
+    "nameExample": "Name of the band",
+    "levelTitle": "Level",
+    "locationTitle": "Location",
+    "locationExample": "City, Country",
+    "descriptionTitle": "Description",
+    "descriptionExample": "Description text...",
+    "genresTitle": "Genres",
+    "instrumentsTitle": "Instruments",
+    "addBtn": "Add"
   },
   "post": {
     "share": "Thank you for sharing the post!"
