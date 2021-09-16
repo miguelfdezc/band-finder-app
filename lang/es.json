@@ -103,6 +103,20 @@
     "genreExample": "rock, pop, jazz...",
     "createBand": "¡Crea tu banda!"
   },
+  "createBandScreen": {
+    "acceptBtn": "Confirmar",
+    "title": "Nueva banda",
+    "nameTitle": "Nombre",
+    "nameExample": "Nombre de la banda",
+    "levelTitle": "Nivel",
+    "locationTitle": "Ubicación",
+    "locationExample": "Ciudad, País",
+    "descriptionTitle": "Descripción",
+    "descriptionExample": "Texto de descripción...",
+    "genresTitle": "Géneros",
+    "instrumentsTitle": "Instrumentos",
+    "addBtn": "Añadir"
+  },
   "post": {
     "share": "¡Gracias por compartir la publicación!"
   },

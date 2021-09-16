@@ -19,7 +19,7 @@ import CustomInput from '../components/Input';
 import CustomButton from '../components/Button';
 import { navigationRef } from '../navigation/RootNavigation';
 
-const BandsScreen = (props) => {
+const BandsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
@@ -77,16 +77,14 @@ const BandsScreen = (props) => {
       </View>
       <TouchableOpacity
         activeOpacity={0.6}
-        onPress={() => {
-          // navigation.navigate('CreateBand')
-        }}
+        onPress={() => navigation.navigate('CreateBand')}
         style={{
           borderColor: 'black',
           borderTopWidth: 1,
           flexDirection: 'row',
           justifyContent: 'space-evenly',
           alignItems: 'center',
-          paddingVertical: 30,
+          paddingVertical: 15,
         }}
       >
         <Ionicons name='add-circle-outline' size={60} color='black' />
