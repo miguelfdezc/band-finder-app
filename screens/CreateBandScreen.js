@@ -8,7 +8,6 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Platform,
   LogBox,
   Alert,
   FlatList,
@@ -17,18 +16,15 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
-import CustomInput from '../components/Input';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
 import Colors from '../constants/Colors';
 import CustomButton from '../components/Button';
 import * as ImagePicker from 'expo-image-picker';
 import { storage } from '../config';
-import moment from 'moment';
 import { createBandAction } from '../store/actions';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { map } from 'lodash';
 import * as Localization from 'expo-localization';
 import * as genres_en from '../assets/data/genres_en.json';
 import * as genres_es from '../assets/data/genres_es.json';

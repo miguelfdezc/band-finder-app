@@ -1,9 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as RootNavigation from '../navigation/RootNavigation';
 
 import HomeScreen, {
   screenOptions as homeScreenOptions,
@@ -53,7 +52,6 @@ import MatchBandScreen, {
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
-import NavBar from '../components/NavBar';
 import { DrawerContent } from './DrawerContent';
 
 const defaultNavOptions = {

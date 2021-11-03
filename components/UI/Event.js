@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
-import { deleteEventAction, getEventAction } from '../../store/actions';
+import { deleteEventAction } from '../../store/actions';
 
 const Event = ({ data }) => {
   const navigation = useNavigation();

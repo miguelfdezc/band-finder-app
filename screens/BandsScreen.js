@@ -4,8 +4,6 @@ import {
   Text,
   View,
   Image,
-  FlatList,
-  SafeAreaView,
   TouchableOpacity,
   Dimensions,
   Alert,
@@ -15,18 +13,15 @@ import Title from '../components/Title';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
-import Colors from '../constants/Colors';
 import { useIsFocused } from '@react-navigation/native';
 import CustomInput from '../components/Input';
 import CustomButton from '../components/Button';
-import { navigationRef } from '../navigation/RootNavigation';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Picker } from '@react-native-picker/picker';
 import * as Localization from 'expo-localization';
 import * as genres_en from '../assets/data/genres_en.json';
 import * as genres_es from '../assets/data/genres_es.json';
-import { matchBandAction } from '../store/actions';
 
 const BandsScreen = ({ navigation }) => {
   const dispatch = useDispatch();

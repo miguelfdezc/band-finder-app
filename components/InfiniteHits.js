@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
-import Highlight from './Highlight';
+import { StyleSheet, View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connectInfiniteHits } from 'react-instantsearch-native';
 import Musician from './UI/Musician';

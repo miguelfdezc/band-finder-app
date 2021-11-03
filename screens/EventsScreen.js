@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  SafeAreaView,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, FlatList } from 'react-native';
 import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
 import { getEventsAction } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
-import Colors from '../constants/Colors';
 import { useIsFocused } from '@react-navigation/native';
 import Event from '../components/UI/Event';
 

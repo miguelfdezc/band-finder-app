@@ -5,16 +5,12 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Modal,
   FlatList,
 } from 'react-native';
-import { t } from '../../lang/IMLocalized';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
-import moment from 'moment';
 
 const Band = ({ data, allGenres, allInstruments }) => {
   const navigation = useNavigation();

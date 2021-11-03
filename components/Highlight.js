@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connectHighlight } from 'react-instantsearch-native';
 import Musician from './UI/Musician';

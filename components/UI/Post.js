@@ -6,12 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  Alert,
   Share,
   Modal,
 } from 'react-native';
 import { t } from '../../lang/IMLocalized';
-import { Video, AVPlaybackStatus } from 'expo-av';
+import { Video } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import {

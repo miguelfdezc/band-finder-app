@@ -9,25 +9,18 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Video, AVPlaybackStatus } from 'expo-av';
+import { Video } from 'expo-av';
 import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
-import CustomInput from '../components/Input';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
 import Colors from '../constants/Colors';
 import CustomButton from '../components/Button';
-import * as FileSystem from 'expo-file-system';
-// import * as firebase from 'firebase/app';
 import * as ImagePicker from 'expo-image-picker';
 import { storage } from '../config';
 
 import { LogBox } from 'react-native';
-import {
-  createPostAction,
-  editPostAction,
-  getPostAction,
-} from '../store/actions';
+import { editPostAction, getPostAction } from '../store/actions';
 
 LogBox.ignoreLogs(['Setting a timer']);
 

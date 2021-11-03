@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import NavBar from '../components/NavBar';
 import { Ionicons } from '@expo/vector-icons';
 

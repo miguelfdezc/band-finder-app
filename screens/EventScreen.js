@@ -1,24 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { t } from '../lang/IMLocalized';
-import Title from '../components/Title';
 import {
   getEventAction,
-  getEventsAction,
   getEventsSubscribedAction,
   updateSubscribedAction,
 } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
-import Colors from '../constants/Colors';
 import { useIsFocused } from '@react-navigation/native';
 import moment from 'moment';
 import CustomButton from '../components/Button';
