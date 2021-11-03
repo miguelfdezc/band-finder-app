@@ -1,0 +1,19 @@
+{
+  "instruments": [
+    { "title": "Keyboard", "key": "keyboard" },
+    { "title": "Piano", "key": "piano" },
+    { "title": "Recorder", "key": "recorder" },
+    { "title": "Classical Guitar", "key": "classical-guitar" },
+    { "title": "Drum set", "key": "drum-set" },
+    { "title": "Electric Guitar", "key": "electric-guitar" },
+    { "title": "Violin", "key": "violin" },
+    { "title": "Percussion", "key": "percussion" },
+    { "title": "Bass", "key": "bass" },
+    { "title": "Saxophone", "key": "saxophone" },
+    { "title": "Flute", "key": "flute" },
+    { "title": "Cello", "key": "cello" },
+    { "title": "Clarinet", "key": "clarinet" },
+    { "title": "Trumpet", "key": "trumpet" },
+    { "title": "Harp", "key": "harp" }
+  ]
+}

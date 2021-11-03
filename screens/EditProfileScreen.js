@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from 'react-native';
 import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
@@ -23,6 +24,12 @@ import { storage } from '../config';
 
 import { LogBox } from 'react-native';
 import { editUserAction } from '../store/actions';
+import { Picker } from '@react-native-picker/picker';
+import * as Localization from 'expo-localization';
+import * as genres_en from '../assets/data/genres_en.json';
+import * as genres_es from '../assets/data/genres_es.json';
+import * as instruments_en from '../assets/data/instruments_en.json';
+import * as instruments_es from '../assets/data/instruments_es.json';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
@@ -38,9 +45,57 @@ const EditProfileScreen = ({ navigation }) => {
     ubicacion: '',
     descripcion: '',
     phoneNumber: '',
+    generos: [],
+    instrumentos: [],
   });
 
+  const [showGenre, setShowGenre] = useState(false);
+  const [showInstrument, setShowInstrument] = useState(false);
+
+  const [allGenres, setAllGenres] = useState([]);
+  const [genres, setGenres] = useState([]);
+
+  const [allInstruments, setAllInstruments] = useState([]);
+  const [instruments, setInstruments] = useState([]);
+
+  const [levels, setLevels] = useState([
+    { title: 'Principiante', key: 'principiante' },
+    { title: 'Intermedio', key: 'intermedio' },
+    { title: 'Avanzado', key: 'avanzado' },
+  ]);
+
+  const [genero, setGenero] = useState(genres[0] ? genres[0].key : '');
+  const [instrumento, setInstrumento] = useState(
+    instruments[0] ? instruments[0].key : ''
+  );
+  const [nivel, setNivel] = useState(levels[0] ? levels[0].key : '');
+
   useEffect(() => {
+    if (genres[0]) setGenero(genres[0].key);
+  }, [genres]);
+
+  useEffect(() => {
+    if (instruments[0]) setInstrumento(instruments[0].key);
+  }, [instruments]);
+
+  useEffect(() => {
+    if (levels[0]) setNivel(levels[0].key);
+  }, [levels]);
+
+  useEffect(() => {
+    const locale = Localization.locale.substring(0, 2);
+    if (locale === 'en') {
+      setAllGenres(genres_en.genres);
+      setGenres(genres_en.genres);
+      setAllInstruments(instruments_en.instruments);
+      setInstruments(instruments_en.instruments);
+    } else if (locale === 'es') {
+      setAllGenres(genres_es.genres);
+      setGenres(genres_es.genres);
+      setAllInstruments(instruments_es.instruments);
+      setInstruments(instruments_es.instruments);
+    }
+
     setEditUser({
       photoURL: currentUser.photoURL,
       imagenFondo: currentUser.imagenFondo,
@@ -49,6 +104,8 @@ const EditProfileScreen = ({ navigation }) => {
       ubicacion: currentUser.ubicacion,
       descripcion: currentUser.descripcion,
       phoneNumber: currentUser.phoneNumber,
+      generos: currentUser.generos,
+      instrumentos: currentUser.instrumentos,
     });
   }, []);
 
@@ -187,6 +244,180 @@ const EditProfileScreen = ({ navigation }) => {
             }
           />
         </View>
+        <View style={{ flex: 1, marginVertical: 5 }}>
+          <Text>{t('createBandScreen.genresTitle')}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: 300,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              data={editUser.generos}
+              horizontal
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <View>
+                  <Text
+                    style={{
+                      borderColor: '#F0E5F1',
+                      borderRadius: 50,
+                      backgroundColor: '#F5F4F6',
+                      paddingHorizontal: 2,
+                      minWidth: 50,
+                      fontSize: 14,
+                      height: 32,
+                      textAlign: 'center',
+                      lineHeight: 32,
+                      marginHorizontal: 5,
+                    }}
+                  >
+                    {allGenres.find((value) => value.key === item).title}
+                  </Text>
+                </View>
+              )}
+            />
+            {genres.length > 0 && (
+              <TouchableOpacity onPress={() => setShowGenre(true)}>
+                <Ionicons name='add-outline' size={40} color='black' />
+              </TouchableOpacity>
+            )}
+          </View>
+          {showGenre && genres.length > 0 && (
+            <View style={{ flexDirection: 'row' }}>
+              <Picker
+                selectedValue={genero}
+                onValueChange={(text) => setGenero(text)}
+                style={{ width: 200 }}
+              >
+                {genres.map((item, key) => (
+                  <Picker.Item label={item.title} value={item.key} key={key} />
+                ))}
+              </Picker>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => {
+                  setEditUser({
+                    ...editUser,
+                    generos: [...editUser.generos, genero],
+                  });
+                  setGenres(genres.filter((value) => value.key !== genero));
+                  setShowGenre(false);
+                }}
+              >
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>
+                    {t('createBandScreen.addBtn')}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
+        <View style={{ flex: 1, marginVertical: 5 }}>
+          <Text>{t('createBandScreen.instrumentsTitle')}</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              width: 300,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              data={editUser.instrumentos}
+              horizontal
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <View>
+                  <Text
+                    style={{
+                      borderColor: '#F0E5F1',
+                      borderRadius: 50,
+                      backgroundColor: '#F5F4F6',
+                      paddingHorizontal: 2,
+                      minWidth: 50,
+                      fontSize: 14,
+                      height: 32,
+                      textAlign: 'center',
+                      lineHeight: 32,
+                      marginHorizontal: 5,
+                    }}
+                  >
+                    {
+                      allInstruments.find((value) => value.key === item.nombre)
+                        .title
+                    }{' '}
+                    {item.nivel}
+                  </Text>
+                </View>
+              )}
+            />
+            {instruments.length > 0 && (
+              <TouchableOpacity onPress={() => setShowInstrument(true)}>
+                <Ionicons name='add-outline' size={40} color='black' />
+              </TouchableOpacity>
+            )}
+          </View>
+          {showInstrument && instruments.length > 0 && (
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'column' }}>
+                <Picker
+                  selectedValue={instrumento}
+                  onValueChange={(text) => setInstrumento(text)}
+                  style={{ width: 200 }}
+                >
+                  {instruments.map((item, key) => (
+                    <Picker.Item
+                      label={item.title}
+                      value={item.key}
+                      key={key}
+                    />
+                  ))}
+                </Picker>
+                <Picker
+                  selectedValue={nivel}
+                  onValueChange={(text) => setNivel(text)}
+                  style={{ width: 200 }}
+                >
+                  {levels.map((item, key) => (
+                    <Picker.Item
+                      label={item.title}
+                      value={item.key}
+                      key={key}
+                    />
+                  ))}
+                </Picker>
+              </View>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => {
+                  setEditUser({
+                    ...editUser,
+                    instrumentos: [
+                      ...editUser.instrumentos,
+                      { nombre: instrumento, nivel: nivel },
+                    ],
+                  });
+                  setInstruments(
+                    instruments.filter((value) => value.key !== instrumento)
+                  );
+                  setShowInstrument(false);
+                }}
+              >
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>
+                    {t('createBandScreen.addBtn')}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
       </View>
 
       <View style={styles.buttonsContainer}>
@@ -260,5 +491,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    marginTop: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    width: 100,
+    backgroundColor: '#E5FDFF',
+    borderWidth: 1,
+    borderColor: '#61DBFB',
+    borderRadius: 4,
+  },
+  buttonText: {
+    fontFamily: 'rubik',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 16,
+    lineHeight: 21,
+    color: '#7C7381',
   },
 });

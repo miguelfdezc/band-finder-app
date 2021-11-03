@@ -7,6 +7,8 @@ import {
   FlatList,
   SafeAreaView,
   TouchableOpacity,
+  Dimensions,
+  Alert,
 } from 'react-native';
 import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
@@ -18,6 +20,13 @@ import { useIsFocused } from '@react-navigation/native';
 import CustomInput from '../components/Input';
 import CustomButton from '../components/Button';
 import { navigationRef } from '../navigation/RootNavigation';
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
+import { Picker } from '@react-native-picker/picker';
+import * as Localization from 'expo-localization';
+import * as genres_en from '../assets/data/genres_en.json';
+import * as genres_es from '../assets/data/genres_es.json';
+import { matchBandAction } from '../store/actions';
 
 const BandsScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -26,71 +35,150 @@ const BandsScreen = ({ navigation }) => {
   const authUser = useSelector((state) => state.auth.authUser);
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const [location, setLocation] = useState('');
-  const [genre, setGenre] = useState('');
+  const [location, setLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+  const [ciudad, setCiudad] = useState('');
 
-  /* useEffect(() => {
-    if (isFocused) {
-    }
-  }, [props, isFocused]); */
+  const [genres, setGenres] = useState([]);
+
+  const [genero, setGenero] = useState('');
+
+  useEffect(() => {
+    if (genres[0]) setGenero(genres[0].key);
+  }, [genres]);
+
+  const [showMap, setShowMap] = useState(false);
+
+  const handleMapRegionChange = async (mapRegion) => setLocation(mapRegion);
+
+  useEffect(() => {
+    const locale = Localization.locale.substring(0, 2);
+    if (locale === 'en') setGenres(genres_en.genres);
+    else if (locale === 'es') setGenres(genres_es.genres);
+
+    const manageLocation = async () => {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          return;
+        }
+        let position = await Location.getCurrentPositionAsync({});
+        setLocation({
+          ...location,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      } catch (error) {
+        Alert.alert(error);
+      }
+    };
+    manageLocation();
+  }, []);
 
   return (
-    <View style={{ margin: 0, backgroundColor: 'white', height: '100%' }}>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 30,
-          marginBottom: 20,
-        }}
-      >
-        <Image
-          source={require('../assets/Rockband-amico.png')}
-          style={{ width: 231, height: 216 }}
-        />
-      </View>
-      <Title style={styles.title}>{t('bandsScreen.title')}</Title>
-      <View style={styles.inputContainer}>
-        <Text>{t('bandsScreen.locationTitle')}</Text>
-        <CustomInput
-          placeholder={t('bandsScreen.locationExample')}
-          autoFocus
-          type='text'
-          value={location}
-          onChangeText={(text) => setLocation(text)}
-        />
-        <Text>{t('bandsScreen.genreTitle')}</Text>
-        <CustomInput
-          placeholder={t('bandsScreen.genreExample')}
-          type='text'
-          value={genre}
-          onChangeText={(text) => setGenre(text)}
-        />
-        <View style={{ alignItems: 'center', marginBottom: 30 }}>
-          <CustomButton
-            onPress={() => {
-              // navigation.navigate('FindBand', { location, genre })
+    <>
+      {showMap ? (
+        <View style={styles.container}>
+          <MapView
+            style={{
+              width: Dimensions.get('window').width,
+              height: Dimensions.get('window').height - 150,
             }}
-            title={t('globals.searchBtn')}
-          />
+            onRegionChange={handleMapRegionChange}
+            showsMyLocationButton
+            showsUserLocation
+            zoomControlEnabled
+            zoomEnabled
+          >
+            <Marker coordinate={location} />
+          </MapView>
+          <View style={{ height: 150, padding: 20 }}>
+            <CustomButton
+              onPress={async () => {
+                const geoInfo = await Location.reverseGeocodeAsync(location);
+                setCiudad(`${geoInfo[0].city}, ${geoInfo[0].country}`);
+                setShowMap(false);
+              }}
+              title={t('createBandScreen.acceptBtn')}
+            />
+          </View>
         </View>
-      </View>
-      <TouchableOpacity
-        activeOpacity={0.6}
-        onPress={() => navigation.navigate('CreateBand')}
-        style={{
-          borderColor: 'black',
-          borderTopWidth: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          paddingVertical: 15,
-        }}
-      >
-        <Ionicons name='add-circle-outline' size={60} color='black' />
-        <Text style={styles.buttonText}>{t('bandsScreen.createBand')}</Text>
-      </TouchableOpacity>
-    </View>
+      ) : (
+        <View style={{ margin: 0, backgroundColor: 'white', height: '100%' }}>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 30,
+              marginBottom: 20,
+            }}
+          >
+            <Image
+              source={require('../assets/Rockband-amico.png')}
+              style={{ width: 231, height: 216 }}
+            />
+          </View>
+          <Title style={styles.title}>{t('bandsScreen.title')}</Title>
+          <View style={styles.inputContainer}>
+            <Text>{t('bandsScreen.locationTitle')}</Text>
+            <CustomInput
+              onFocus={() => setShowMap(true)}
+              style={styles.input}
+              placeholder={t('createBandScreen.locationExample')}
+              value={ciudad}
+            />
+            <View style={{ flex: 1, marginVertical: 5 }}>
+              <Text>{t('bandsScreen.genreTitle')}</Text>
+              <View style={{ flexDirection: 'row', width: 200 }}>
+                <Picker
+                  selectedValue={genero}
+                  onValueChange={(text) => setGenero(text)}
+                  style={{ width: 200 }}
+                >
+                  {genres.map((item, key) => (
+                    <Picker.Item
+                      label={item.title}
+                      value={item.key}
+                      key={key}
+                    />
+                  ))}
+                </Picker>
+              </View>
+            </View>
+            <View
+              style={{ flexDirection: 'row', width: 200, height: 50 }}
+            ></View>
+            <View style={{ alignItems: 'center', marginBottom: 30 }}>
+              <CustomButton
+                onPress={() => {
+                  navigation.navigate('MatchBand', { location, genero });
+                }}
+                title={t('globals.searchBtn')}
+              />
+            </View>
+          </View>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => navigation.navigate('CreateBand')}
+            style={{
+              borderColor: 'black',
+              borderTopWidth: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              paddingVertical: 15,
+            }}
+          >
+            <Ionicons name='add-circle-outline' size={60} color='black' />
+            <Text style={styles.buttonText}>{t('bandsScreen.createBand')}</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </>
   );
 };
 

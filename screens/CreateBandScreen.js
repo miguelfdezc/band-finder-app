@@ -29,6 +29,11 @@ import { createBandAction } from '../store/actions';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { map } from 'lodash';
+import * as Localization from 'expo-localization';
+import * as genres_en from '../assets/data/genres_en.json';
+import * as genres_es from '../assets/data/genres_es.json';
+import * as instruments_en from '../assets/data/instruments_en.json';
+import * as instruments_es from '../assets/data/instruments_es.json';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
@@ -65,6 +70,19 @@ const CreateBandScreen = ({ navigation }) => {
   const [showInstrument, setShowInstrument] = useState(false);
 
   useEffect(() => {
+    const locale = Localization.locale.substring(0, 2);
+    if (locale === 'en') {
+      setAllGenres(genres_en.genres);
+      setGenres(genres_en.genres);
+      setAllInstruments(instruments_en.instruments);
+      setInstruments(instruments_en.instruments);
+    } else if (locale === 'es') {
+      setAllGenres(genres_es.genres);
+      setGenres(genres_es.genres);
+      setAllInstruments(instruments_es.instruments);
+      setInstruments(instruments_es.instruments);
+    }
+
     const manageLocation = async () => {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
@@ -126,44 +144,23 @@ const CreateBandScreen = ({ navigation }) => {
 
   const handleMapRegionChange = async (mapRegion) => setLocation(mapRegion);
 
-  const [genres, setGenres] = useState(
-    [
-      { title: 'rock', key: 'rock' },
-      { title: 'pop', key: 'pop' },
-      { title: 'jazz', key: 'jazz' },
-      { title: 'electro', key: 'electro' },
-      { title: 'reggaeton', key: 'reggaeton' },
-      { title: 'metal', key: 'metal' },
-      { title: 'classic', key: 'classic' },
-      { title: 'blues', key: 'blues' },
-      { title: 'swing', key: 'swing' },
-    ].sort((a, b) => a.title.localeCompare(b.title))
-  );
+  const [allGenres, setAllGenres] = useState([]);
+  const [genres, setGenres] = useState([]);
 
-  const [instruments, setInstruments] = useState(
-    [
-      { title: 'guitarra eléctrica', key: 'guitarra-electrica' },
-      { title: 'batería', key: 'bateria' },
-      { title: 'voz', key: 'voz' },
-      { title: 'piano', key: 'piano' },
-      { title: 'ukelele', key: 'ukelele' },
-      { title: 'saxofón', key: 'saxofon' },
-      { title: 'bajo', key: 'bajo' },
-      { title: 'guitarra clásica', key: 'guitarra-clasica' },
-    ].sort((a, b) => a.title.localeCompare(b.title))
-  );
+  const [allInstruments, setAllInstruments] = useState([]);
+  const [instruments, setInstruments] = useState([]);
 
-  const [genero, setGenero] = useState(genres[0] ? genres[0].title : '');
+  const [genero, setGenero] = useState(genres[0] ? genres[0].key : '');
   const [instrumento, setInstrumento] = useState(
-    instruments[0] ? instruments[0].title : ''
+    instruments[0] ? instruments[0].key : ''
   );
 
   useEffect(() => {
-    if (genres[0]) setGenero(genres[0].title);
+    if (genres[0]) setGenero(genres[0].key);
   }, [genres]);
 
   useEffect(() => {
-    if (instruments[0]) setInstrumento(instruments[0].title);
+    if (instruments[0]) setInstrumento(instruments[0].key);
   }, [instruments]);
 
   return (
@@ -320,7 +317,7 @@ const CreateBandScreen = ({ navigation }) => {
                           marginHorizontal: 5,
                         }}
                       >
-                        {item}
+                        {allGenres.find((value) => value.key === item).title}
                       </Text>
                     </View>
                   )}
@@ -353,9 +350,7 @@ const CreateBandScreen = ({ navigation }) => {
                         ...band,
                         generos: [...band.generos, genero],
                       });
-                      setGenres(
-                        genres.filter((value) => value.title !== genero)
-                      );
+                      setGenres(genres.filter((value) => value.key !== genero));
                       setShowGenre(false);
                     }}
                   >
@@ -399,7 +394,10 @@ const CreateBandScreen = ({ navigation }) => {
                           marginHorizontal: 5,
                         }}
                       >
-                        {item}
+                        {
+                          allInstruments.find((value) => value.key === item)
+                            .title
+                        }
                       </Text>
                     </View>
                   )}
@@ -433,9 +431,7 @@ const CreateBandScreen = ({ navigation }) => {
                         instrumentos: [...band.instrumentos, instrumento],
                       });
                       setInstruments(
-                        instruments.filter(
-                          (value) => value.title !== instrumento
-                        )
+                        instruments.filter((value) => value.key !== instrumento)
                       );
                       setShowInstrument(false);
                     }}
