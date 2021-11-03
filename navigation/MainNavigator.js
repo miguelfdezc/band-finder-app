@@ -44,6 +44,12 @@ import BandsScreen, {
 import CreateBandScreen, {
   screenOptions as createBandScreenOptions,
 } from '../screens/CreateBandScreen';
+import SearchScreen, {
+  screenOptions as searchScreenOptions,
+} from '../screens/SearchScreen';
+import MatchBandScreen, {
+  screenOptions as matchBandScreenOptions,
+} from '../screens/MatchBandScreen';
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
@@ -103,6 +109,20 @@ export const ProfileNavigator = () => {
   );
 };
 
+const SearchStackNavigator = createStackNavigator();
+
+export const SearchNavigator = () => {
+  return (
+    <SearchStackNavigator.Navigator screenOptions={defaultNavOptions}>
+      <SearchStackNavigator.Screen
+        name='Search'
+        component={SearchScreen}
+        options={searchScreenOptions}
+      />
+    </SearchStackNavigator.Navigator>
+  );
+};
+
 const EventsStackNavigator = createStackNavigator();
 
 export const EventsNavigator = () => {
@@ -147,6 +167,11 @@ export const BandsNavigator = () => {
         component={CreateBandScreen}
         options={createBandScreenOptions}
       />
+      <BandsStackNavigator.Screen
+        name='MatchBand'
+        component={MatchBandScreen}
+        options={matchBandScreenOptions}
+      />
     </BandsStackNavigator.Navigator>
   );
 };
@@ -179,6 +204,16 @@ export const MenuNavigator = () => {
             <Ionicons name='person-outline' size={24} color='#1B141F' />
           ),
           drawerLabel: t('screenTitles.profile'),
+        }}
+      />
+      <MenuDrawerNavigator.Screen
+        name='SearchNavigator'
+        component={SearchNavigator}
+        options={{
+          drawerIcon: () => (
+            <Ionicons name='search' size={24} color='#1B141F' />
+          ),
+          drawerLabel: t('screenTitles.search'),
         }}
       />
       <MenuDrawerNavigator.Screen
