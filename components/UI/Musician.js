@@ -1,20 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  FlatList,
-} from 'react-native';
-import { t } from '../../lang/IMLocalized';
+import React, { useEffect } from 'react';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
-import moment from 'moment';
 import { getUserAction } from '../../store/actions';
 
 const Musician = ({ data }) => {

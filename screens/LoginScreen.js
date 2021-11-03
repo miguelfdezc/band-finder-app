@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   StyleSheet,
@@ -13,7 +13,6 @@ import CustomButton from '../components/Button';
 import Text from '../components/Text';
 import { Image } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
-import { auth } from '../config';
 import { t } from '../lang/IMLocalized';
 import { loginAction } from '../store/actions';
 

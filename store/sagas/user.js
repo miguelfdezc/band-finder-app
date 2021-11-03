@@ -1,9 +1,7 @@
 import { put, takeLatest, all, call } from 'redux-saga/effects';
-import { auth } from '../../config';
 import axios from 'axios';
 import { getUserActionSuccess, editUserActionSuccess } from '../actions';
 import { UserActionTypes } from '../types/user';
-import * as RootNavigation from '../../navigation/RootNavigation';
 import Constants from 'expo-constants';
 import { Alert } from 'react-native';
 

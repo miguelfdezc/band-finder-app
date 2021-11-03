@@ -10,12 +10,10 @@ import {
   ScrollView,
   Platform,
   LogBox,
-  Alert,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
-import CustomInput from '../components/Input';
 import { Ionicons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
 import Colors from '../constants/Colors';

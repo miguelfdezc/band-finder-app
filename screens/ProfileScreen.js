@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  SafeAreaView,
-} from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native';
 import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
 import {

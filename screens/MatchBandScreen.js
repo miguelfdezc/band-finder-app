@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  SafeAreaView,
-  TouchableOpacity,
-  Dimensions,
-  Alert,
-} from 'react-native';
+import { StyleSheet, Text, View, FlatList, Dimensions } from 'react-native';
 import { Slider } from 'react-native-elements';
 import { t } from '../lang/IMLocalized';
 import Title from '../components/Title';
@@ -18,11 +8,6 @@ import { Ionicons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
 import Colors from '../constants/Colors';
 import { useIsFocused } from '@react-navigation/native';
-import CustomInput from '../components/Input';
-import CustomButton from '../components/Button';
-import { navigationRef } from '../navigation/RootNavigation';
-import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
 import { Picker } from '@react-native-picker/picker';
 import * as Localization from 'expo-localization';
 import * as genres_en from '../assets/data/genres_en.json';
