@@ -30,6 +30,7 @@ import * as genres_en from '../assets/data/genres_en.json';
 import * as genres_es from '../assets/data/genres_es.json';
 import * as instruments_en from '../assets/data/instruments_en.json';
 import * as instruments_es from '../assets/data/instruments_es.json';
+import { useForm, Controller } from 'react-hook-form';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
@@ -54,6 +55,53 @@ const CreateBandScreen = ({ navigation }) => {
     valoracion: 0.0,
     fans: [],
   });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    defaultValues: {
+      nombre: '',
+      ciudad: '',
+      descripcion: '',
+    },
+  });
+
+  useEffect(() => {
+    if (band.ciudad) {
+      setValue('ciudad', band.ciudad);
+    }
+  }, [band.ciudad]);
+
+  const onSubmit = (data) => {
+    const { nombre, ciudad, descripcion } = data;
+    dispatch(createBandAction({ ...band, nombre, ciudad, descripcion }));
+  };
+
+  const registerOptions = {
+    nombre: {
+      required: 'Nombre es obligatorio',
+      maxLength: {
+        value: 30,
+        message: 'Nombre debe tener como máximo 30 caracteres',
+      },
+    },
+    ciudad: {
+      required: 'Ciudad es obligatoria',
+      maxLength: {
+        value: 30,
+        message: 'Ciudad debe tener como máximo 30 caracteres',
+      },
+    },
+    descripcion: {
+      maxLength: {
+        value: 150,
+        message: 'Descripción debe tener como máximo 150 caracteres',
+      },
+    },
+  };
 
   const [location, setLocation] = useState({
     latitude: 0,
@@ -243,12 +291,23 @@ const CreateBandScreen = ({ navigation }) => {
           <View style={styles.inputContainer}>
             <View>
               <Text>{t('createBandScreen.nameTitle')}</Text>
-              <TextInput
-                style={styles.input}
-                placeholder={t('createBandScreen.nameExample')}
-                value={band.nombre}
-                onChangeText={(text) => setBand({ ...band, nombre: text })}
+              <Controller
+                control={control}
+                rules={registerOptions.nombre}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.input}
+                    placeholder={t('createBandScreen.nameExample')}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+                name='nombre'
               />
+              {errors.nombre && (
+                <Text style={{ color: 'red' }}>{errors.nombre.message}</Text>
+              )}
             </View>
             <View>
               <Text>{t('createBandScreen.levelTitle')}</Text>
@@ -264,23 +323,48 @@ const CreateBandScreen = ({ navigation }) => {
             </View>
             <View>
               <Text>{t('createBandScreen.locationTitle')}</Text>
-              <TextInput
-                onFocus={() => setShowMap(true)}
-                style={styles.input}
-                placeholder={t('createBandScreen.locationExample')}
-                value={band.ciudad}
+              <Controller
+                control={control}
+                rules={registerOptions.ciudad}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    onFocus={() => setShowMap(true)}
+                    style={styles.input}
+                    placeholder={t('createBandScreen.locationExample')}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+                name='ciudad'
               />
+              {errors.ciudad && (
+                <Text style={{ color: 'red' }}>{errors.ciudad.message}</Text>
+              )}
             </View>
             <View>
               <Text>{t('createBandScreen.descriptionTitle')}</Text>
-              <TextInput
-                style={styles.textArea}
-                multiline={true}
-                numberOfLines={4}
-                placeholder={t('createBandScreen.descriptionExample')}
-                value={band.descripcion}
-                onChangeText={(text) => setBand({ ...band, descripcion: text })}
+              <Controller
+                control={control}
+                rules={registerOptions.descripcion}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    style={styles.textArea}
+                    multiline={true}
+                    numberOfLines={4}
+                    placeholder={t('createBandScreen.descriptionExample')}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+                name='descripcion'
               />
+              {errors.descripcion && (
+                <Text style={{ color: 'red' }}>
+                  {errors.descripcion.message}
+                </Text>
+              )}
             </View>
             <View style={{ flex: 1, marginVertical: 5 }}>
               <Text>{t('createBandScreen.genresTitle')}</Text>
@@ -448,7 +532,7 @@ const CreateBandScreen = ({ navigation }) => {
               <Text style={styles.blueText}>{t('globals.cancelBtn')}</Text>
             </TouchableOpacity>
             <CustomButton
-              onPress={() => dispatch(createBandAction(band))}
+              onPress={handleSubmit(onSubmit)}
               title={t('globals.createBtn')}
             />
           </View>

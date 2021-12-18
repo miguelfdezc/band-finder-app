@@ -28,6 +28,7 @@ import * as genres_en from '../assets/data/genres_en.json';
 import * as genres_es from '../assets/data/genres_es.json';
 import * as instruments_en from '../assets/data/instruments_en.json';
 import * as instruments_es from '../assets/data/instruments_es.json';
+import { useForm, Controller } from 'react-hook-form';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
@@ -80,6 +81,61 @@ const EditProfileScreen = ({ navigation }) => {
     if (levels[0]) setNivel(levels[0].key);
   }, [levels]);
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    defaultValues: {
+      phoneNumber: currentUser.phoneNumber,
+      descripcion: currentUser.descripcion,
+      displayName: currentUser.displayName,
+      usuario: currentUser.usuario,
+    },
+  });
+
+  const onSubmit = (data) => {
+    const { phoneNumber, descripcion, displayName, usuario } = data;
+    dispatch(
+      editUserAction(currentUser.uid, {
+        ...editUser,
+        phoneNumber,
+        descripcion,
+        displayName,
+        usuario,
+      })
+    );
+  };
+
+  const registerOptions = {
+    phoneNumber: {
+      pattern: {
+        value: /([+(\d]{1})(([\d+() -.]){5,16})([+(\d]{1})/gm,
+        message: 'Teléfono debe ser válido',
+      },
+    },
+    descripcion: {
+      maxLength: {
+        value: 150,
+        message: 'Descripción debe tener como máximo 150 caracteres',
+      },
+    },
+    displayName: {
+      maxLength: {
+        value: 20,
+        message: 'Nombre debe tener como máximo 20 caracteres',
+      },
+    },
+    usuario: {
+      required: 'Usuario es obligatorio',
+      maxLength: {
+        value: 10,
+        message: 'Usuario debe tener como máximo 10 caracteres',
+      },
+    },
+  };
+
   useEffect(() => {
     const locale = Localization.locale.substring(0, 2);
     if (locale === 'en') {
@@ -106,6 +162,21 @@ const EditProfileScreen = ({ navigation }) => {
       instrumentos: currentUser.instrumentos,
     });
   }, []);
+
+  useEffect(() => {
+    if (editUser.phoneNumber) {
+      setValue('phoneNumber', editUser.phoneNumber);
+    }
+    if (editUser.descripcion) {
+      setValue('descripcion', editUser.descripcion);
+    }
+    if (editUser.displayName) {
+      setValue('displayName', editUser.displayName);
+    }
+    if (editUser.usuario) {
+      setValue('usuario', editUser.usuario);
+    }
+  }, [editUser]);
 
   const uploadImage = async (tipo) => {
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -188,24 +259,44 @@ const EditProfileScreen = ({ navigation }) => {
       <View style={styles.inputContainer}>
         <View>
           <Text>{t('editProfileScreen.usernameTitle')}</Text>
-          <CustomInput
-            placeholder={t('editProfileScreen.usernameExample')}
-            autoFocus
-            type='text'
-            value={editUser.usuario}
-            onChangeText={(text) => setEditUser({ ...editUser, usuario: text })}
+          <Controller
+            control={control}
+            rules={registerOptions.usuario}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomInput
+                placeholder={t('editProfileScreen.usernameExample')}
+                autoFocus
+                type='text'
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name='usuario'
           />
+          {errors.usuario && (
+            <Text style={{ color: 'red' }}>{errors.usuario.message}</Text>
+          )}
         </View>
         <View>
           <Text>{t('editProfileScreen.nameTitle')}</Text>
-          <CustomInput
-            placeholder={t('editProfileScreen.nameExample')}
-            type='text'
-            value={editUser.displayName}
-            onChangeText={(text) =>
-              setEditUser({ ...editUser, displayName: text })
-            }
+          <Controller
+            control={control}
+            rules={registerOptions.displayName}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomInput
+                placeholder={t('editProfileScreen.nameExample')}
+                type='text'
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name='displayName'
           />
+          {errors.displayName && (
+            <Text style={{ color: 'red' }}>{errors.displayName.message}</Text>
+          )}
         </View>
         <View>
           <Text>{t('editProfileScreen.locationTitle')}</Text>
@@ -220,27 +311,45 @@ const EditProfileScreen = ({ navigation }) => {
         </View>
         <View>
           <Text>{t('editProfileScreen.descriptionTitle')}</Text>
-          <TextInput
-            style={styles.textArea}
-            multiline={true}
-            numberOfLines={4}
-            placeholder={t('editProfileScreen.descriptionExample')}
-            value={editUser.descripcion}
-            onChangeText={(text) =>
-              setEditUser({ ...editUser, descripcion: text })
-            }
+          <Controller
+            control={control}
+            rules={registerOptions.descripcion}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.textArea}
+                multiline={true}
+                numberOfLines={4}
+                placeholder={t('editProfileScreen.descriptionExample')}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name='descripcion'
           />
+          {errors.descripcion && (
+            <Text style={{ color: 'red' }}>{errors.descripcion.message}</Text>
+          )}
         </View>
         <View>
           <Text>{t('editProfileScreen.phoneTitle')}</Text>
-          <CustomInput
-            placeholder={t('editProfileScreen.phoneExample')}
-            type='text'
-            value={editUser.phoneNumber}
-            onChangeText={(text) =>
-              setEditUser({ ...editUser, phoneNumber: text })
-            }
+          <Controller
+            control={control}
+            rules={registerOptions.phoneNumber}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomInput
+                placeholder={t('editProfileScreen.phoneExample')}
+                type='text'
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name='phoneNumber'
           />
+          {errors.phoneNumber && (
+            <Text style={{ color: 'red' }}>{errors.phoneNumber.message}</Text>
+          )}
         </View>
         <View style={{ flex: 1, marginVertical: 5 }}>
           <Text>{t('createBandScreen.genresTitle')}</Text>
@@ -423,7 +532,7 @@ const EditProfileScreen = ({ navigation }) => {
           <Text style={styles.blueText}>{t('globals.cancelBtn')}</Text>
         </TouchableOpacity>
         <CustomButton
-          onPress={() => dispatch(editUserAction(currentUser.uid, editUser))}
+          onPress={handleSubmit(onSubmit)}
           title={t('globals.saveBtn')}
         />
       </View>
