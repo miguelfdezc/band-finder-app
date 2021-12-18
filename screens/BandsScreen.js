@@ -59,6 +59,7 @@ const BandsScreen = ({ navigation }) => {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
+          Alert.alert('Permission to access location was denied');
           return;
         }
         let position = await Location.getCurrentPositionAsync({});
@@ -91,10 +92,13 @@ const BandsScreen = ({ navigation }) => {
           >
             <Marker coordinate={location} />
           </MapView>
-          <View style={{ height: 150, padding: 20 }}>
+          <View style={{ height: 150, padding: 20, alignSelf: 'center' }}>
             <CustomButton
               onPress={async () => {
-                const geoInfo = await Location.reverseGeocodeAsync(location);
+                const geoInfo = await Location.reverseGeocodeAsync({
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                });
                 setCiudad(`${geoInfo[0].city}, ${geoInfo[0].country}`);
                 setShowMap(false);
               }}
@@ -180,7 +184,9 @@ const BandsScreen = ({ navigation }) => {
 export default BandsScreen;
 
 export const screenOptions = (navData) =>
-  NavBar(navData, true, 'Bands', 'people-outline', Ionicons, () => {});
+  NavBar(navData, true, 'Bands', 'people-outline', Ionicons, () => {
+    navData.navigation.navigate('ManageBands');
+  });
 
 const styles = StyleSheet.create({
   title: {

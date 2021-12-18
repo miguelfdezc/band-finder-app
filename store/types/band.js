@@ -1,10 +1,36 @@
 export const BandActionTypes = {
   CREATE_BAND: 'CREATE_BAND',
   CREATE_BAND_SUCCESS: 'CREATE_BAND_SUCCESS',
+  SUBMIT_APPLICATION: 'SUBMIT_APPLICATION',
+  SUBMIT_APPLICATION_SUCCESS: 'SUBMIT_APPLICATION_SUCCESS',
+  GET_BANDS_FOUNDER: 'GET_BANDS_FOUNDER',
+  GET_BANDS_FOUNDER_SUCCESS: 'GET_BANDS_FOUNDER_SUCCESS',
+  GET_BAND: 'GET_BAND',
+  GET_BAND_SUCCESS: 'GET_BAND_SUCCESS',
+  EDIT_BAND: 'EDIT_BAND',
+  EDIT_BAND_SUCCESS: 'EDIT_BAND_SUCCESS',
+  UPDATE_MEMBERS: 'UPDATE_MEMBERS',
+  UPDATE_MEMBERS_SUCCESS: 'UPDATE_MEMBERS_SUCCESS',
 };
 
 export const BandDefaultState = () => ({
   band: {
+    usuario: '',
+    nombre: '',
+    descripcion: '',
+    nivel: 'principiante',
+    fechaFundacion: new Date(),
+    ubicacion: {},
+    ciudad: '',
+    generos: [],
+    imagenPerfil: '',
+    imagenFondo: '',
+    actuaciones: 0,
+    valoracion: 0.0,
+    fans: 0,
+  },
+  myBands: [],
+  editBand: {
     usuario: '',
     nombre: '',
     descripcion: '',

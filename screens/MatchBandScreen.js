@@ -131,6 +131,7 @@ const MatchBandScreen = ({ route, navigation }) => {
                 data={item}
                 allGenres={allGenres}
                 allInstruments={allInstruments}
+                instrumento={instrumento}
               />
             )}
             contentContainerStyle={{ paddingBottom: 120 }}
