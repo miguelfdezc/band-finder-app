@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { submitApplicationAction } from '../../store/actions';
 
-const Band = ({ data, allGenres, allInstruments }) => {
+const Band = ({ data, allGenres, allInstruments, instrumento }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -39,15 +40,26 @@ const Band = ({ data, allGenres, allInstruments }) => {
           <Text style={styles.title}>{nombre}</Text>
           <TouchableOpacity
             onPress={() => {
-              // console.log('ID:', id);
-              // Send band request
+              distancia
+                ? dispatch(
+                    submitApplicationAction(id, authUser.uid, instrumento)
+                  )
+                : navigation.navigate('EditBand', { id });
             }}
           >
-            <Feather name='send' size={22} color='black' />
+            {distancia ? (
+              <Feather name='send' size={22} color='black' />
+            ) : (
+              <Ionicons
+                name='ellipsis-vertical'
+                size={20}
+                color={Colors.grey}
+              />
+            )}
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text>{parseFloat(distancia.toFixed(2))} km</Text>
+          {distancia && <Text>{parseFloat(distancia.toFixed(2))} km</Text>}
           <Text style={styles.description}>Nivel: {nivel}</Text>
         </View>
         {isLoaded && (

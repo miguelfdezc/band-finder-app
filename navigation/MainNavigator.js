@@ -49,6 +49,12 @@ import SearchScreen, {
 import MatchBandScreen, {
   screenOptions as matchBandScreenOptions,
 } from '../screens/MatchBandScreen';
+import ManageBandsScreen, {
+  screenOptions as manageBandsScreenOptions,
+} from '../screens/ManageBandsScreen';
+import EditBandScreen, {
+  screenOptions as editBandScreenOptions,
+} from '../screens/EditBandScreen';
 
 import Colors from '../constants/Colors';
 import { t } from '../lang/IMLocalized';
@@ -169,6 +175,16 @@ export const BandsNavigator = () => {
         name='MatchBand'
         component={MatchBandScreen}
         options={matchBandScreenOptions}
+      />
+      <BandsStackNavigator.Screen
+        name='ManageBands'
+        component={ManageBandsScreen}
+        options={manageBandsScreenOptions}
+      />
+      <BandsStackNavigator.Screen
+        name='EditBand'
+        component={EditBandScreen}
+        options={editBandScreenOptions}
       />
     </BandsStackNavigator.Navigator>
   );
