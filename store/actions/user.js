@@ -11,6 +11,12 @@ export const editUserAction = (uid, data) => ({
   data,
 });
 
+export const updateFansAction = (uid, data) => ({
+  type: UserActionTypes.UPDATE_FANS,
+  uid,
+  data,
+});
+
 export const getUserActionSuccess = (data) => ({
   type: UserActionTypes.GET_USER_SUCCESS,
   data,

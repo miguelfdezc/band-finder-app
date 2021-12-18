@@ -52,7 +52,7 @@ const CreateBandScreen = ({ navigation }) => {
     imagenFondo: '',
     actuaciones: 0,
     valoracion: 0.0,
-    fans: 0,
+    fans: [],
   });
 
   const [location, setLocation] = useState({

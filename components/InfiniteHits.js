@@ -3,6 +3,7 @@ import { StyleSheet, View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { connectInfiniteHits } from 'react-instantsearch-native';
 import Musician from './UI/Musician';
+import { useSelector } from 'react-redux';
 
 const styles = StyleSheet.create({
   separator: {
@@ -18,23 +19,29 @@ const styles = StyleSheet.create({
   },
 });
 
-const InfiniteHits = ({ hits, hasMore, refine }) => (
-  <FlatList
-    data={hits}
-    keyExtractor={(item) => item.objectID}
-    ItemSeparatorComponent={() => <View style={styles.separator} />}
-    onEndReached={() => hasMore && refine()}
-    renderItem={({ item }) => {
-      return (
-        <View style={styles.item}>
-          {/* <Text>{JSON.stringify(item).slice(0, 100)}</Text> */}
-          <Musician data={item} />
-        </View>
-      );
-    }}
-  />
-);
+const InfiniteHits = ({ hits, hasMore, refine, navigation }) => {
+  const authUser = useSelector((state) => state.auth.authUser);
 
+  return (
+    <FlatList
+      data={hits}
+      keyExtractor={(item) => item.objectID}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      onEndReached={() => hasMore && refine()}
+      renderItem={({ item }) => {
+        return (
+          <>
+            {item.objectID !== authUser.uid && (
+              <View style={styles.item}>
+                <Musician data={item} navigation={navigation} />
+              </View>
+            )}
+          </>
+        );
+      }}
+    />
+  );
+};
 InfiniteHits.propTypes = {
   hits: PropTypes.arrayOf(PropTypes.object).isRequired,
   hasMore: PropTypes.bool.isRequired,

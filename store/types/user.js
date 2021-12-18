@@ -3,6 +3,7 @@ export const UserActionTypes = {
   GET_USER_SUCCESS: 'GET_USER_SUCCESS',
   EDIT_USER: 'EDIT_USER',
   EDIT_USER_SUCCESS: 'EDIT_USER_SUCCESS',
+  UPDATE_FANS: 'UPDATE_FANS',
 };
 
 export const UserDefaultState = () => ({
@@ -16,7 +17,8 @@ export const UserDefaultState = () => ({
     disabled: false,
     email: '',
     emailVerified: false,
-    fans: 0,
+    fans: [],
+    seguidos: [],
     imagenFondo: '',
     photoURL: 'https://image.flaticon.com/icons/png/512/848/848043.png',
     tokensValidAfterTime: '',

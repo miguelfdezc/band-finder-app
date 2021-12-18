@@ -96,7 +96,6 @@ const EditBandScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     setBand(editBand);
-    console.log('BAND:', band);
   }, [editBand]);
 
   const uploadFile = async (type) => {
@@ -465,7 +464,7 @@ const EditBandScreen = ({ route, navigation }) => {
                     <Text>Miembros</Text>
                     <View style={{ width: '100%' }}>
                       {band.miembros.map((miembro, index) => (
-                        <View
+                        <TouchableOpacity
                           key={index}
                           style={{
                             flexDirection: 'row',
@@ -473,6 +472,11 @@ const EditBandScreen = ({ route, navigation }) => {
                             alignItems: 'center',
                             justifyContent: 'space-around',
                           }}
+                          onPress={() =>
+                            navigation.navigate('User', {
+                              id: miembro.usuario,
+                            })
+                          }
                         >
                           <Text>
                             {miembro.username} -{' '}
@@ -482,7 +486,7 @@ const EditBandScreen = ({ route, navigation }) => {
                               ).title
                             }
                           </Text>
-                        </View>
+                        </TouchableOpacity>
                       ))}
                     </View>
                   </View>
@@ -503,14 +507,22 @@ const EditBandScreen = ({ route, navigation }) => {
                           justifyContent: 'space-around',
                         }}
                       >
-                        <Text>
-                          {aplicacion.username} -{' '}
-                          {
-                            allInstruments.find(
-                              (value) => value.key === aplicacion.instrumento
-                            ).title
+                        <TouchableOpacity
+                          onPress={() =>
+                            navigation.navigate('User', {
+                              id: aplicacion.usuario,
+                            })
                           }
-                        </Text>
+                        >
+                          <Text>
+                            {aplicacion.username} -{' '}
+                            {
+                              allInstruments.find(
+                                (value) => value.key === aplicacion.instrumento
+                              ).title
+                            }
+                          </Text>
+                        </TouchableOpacity>
                         <View
                           style={{
                             flexDirection: 'row',
@@ -532,7 +544,7 @@ const EditBandScreen = ({ route, navigation }) => {
                                 aplicaciones: band.aplicaciones.filter(
                                   (a) => a.usuario !== aplicacion.usuario
                                 ),
-                                miembros: band.miembros.push({ ...aplicacion }),
+                                miembros: [...band.miembros, { ...aplicacion }],
                               });
                             }}
                           >

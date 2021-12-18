@@ -1,22 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../constants/Colors';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
-import { getUserAction } from '../../store/actions';
+import { getUserAction, updateFansAction } from '../../store/actions';
 
-const Musician = ({ data }) => {
-  const navigation = useNavigation();
+const Musician = ({ data, navigation }) => {
   const dispatch = useDispatch();
 
   const authUser = useSelector((state) => state.auth.authUser);
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const {
+  const [fans, setFans] = useState([]);
+
+  let {
     actuaciones,
     descripcion,
-    fans,
     imagenFondo,
     objectID,
     ubicacion,
@@ -25,6 +24,7 @@ const Musician = ({ data }) => {
   } = data;
 
   useEffect(() => {
+    setFans(data.fans);
     dispatch(getUserAction(objectID));
   }, []);
 
@@ -37,18 +37,42 @@ const Musician = ({ data }) => {
       )}
       <View style={styles.info}>
         <View style={styles.header}>
-          <Text style={styles.title}>{usuario}</Text>
           <TouchableOpacity
             onPress={() => {
-              // console.log('ID:', id);
-              // navigation.navigate('Profile', { id })
+              navigation.navigate('User', {
+                id: objectID,
+              });
             }}
           >
-            <Feather name='send' size={22} color='black' />
+            <Text style={styles.title}>{usuario}</Text>
           </TouchableOpacity>
+          {typeof fans !== 'undefined' && Array.isArray(fans) && (
+            <TouchableOpacity
+              onPress={() => {
+                setFans(
+                  fans.includes(authUser.uid)
+                    ? [...fans.filter((f) => f !== authUser.uid)]
+                    : [...fans, authUser.uid]
+                );
+                dispatch(
+                  updateFansAction(authUser.uid, {
+                    usuario: objectID,
+                  })
+                );
+              }}
+            >
+              <Ionicons
+                name={`person-${
+                  fans.includes(authUser.uid) ? 'remove' : 'add'
+                }-outline`}
+                size={22}
+                color='black'
+              />
+            </TouchableOpacity>
+          )}
         </View>
         <Text>Actuaciones: {actuaciones}</Text>
-        <Text>Fans: {fans}</Text>
+        <Text>Fans: {fans.length ?? 0}</Text>
         <Text>Valoración: {valoracion}</Text>
       </View>
     </View>
