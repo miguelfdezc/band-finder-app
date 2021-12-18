@@ -24,12 +24,6 @@ import * as genres_en from '../assets/data/genres_en.json';
 import * as genres_es from '../assets/data/genres_es.json';
 
 const BandsScreen = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const isFocused = useIsFocused();
-
-  const authUser = useSelector((state) => state.auth.authUser);
-  const currentUser = useSelector((state) => state.user.currentUser);
-
   const [location, setLocation] = useState({
     latitude: 0,
     longitude: 0,

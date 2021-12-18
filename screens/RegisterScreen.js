@@ -5,6 +5,7 @@ import {
   View,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Title from '../components/Title';
@@ -14,32 +15,70 @@ import { t } from '../lang/IMLocalized';
 import { signUpAction } from '../store/actions';
 import Colors from '../constants/Colors';
 import SwitchSelector from 'react-native-switch-selector';
+import { useForm, Controller } from 'react-hook-form';
 
 const RegisterScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const [usuario, setUsuario] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
   const [selectedOption, setSelectedOption] = useState('musicos');
 
-  const validateForm = () => {
-    if (!usuario || !email || !password || !repeatPassword) {
-      alert(t('validations.emptyFields'));
-      return false;
-    }
-    if (password !== repeatPassword) {
-      alert(t('validations.passwordRepeat'));
-      return false;
-    }
-    return true;
-  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      usuario: '',
+      email: '',
+      password: '',
+      repeatPassword: '',
+    },
+  });
 
-  const signUp = () => {
-    if (validateForm()) {
+  const onSubmit = (data) => {
+    const { usuario, email, password, repeatPassword } = data;
+    if (validateForm(password, repeatPassword)) {
       dispatch(signUpAction(usuario, email, password, selectedOption));
     }
+  };
+
+  const registerOptions = {
+    usuario: {
+      required: 'Usuario es obligatorio',
+      maxLength: {
+        value: 10,
+        message: 'Usuario debe tener como máximo 10 caracteres',
+      },
+    },
+    email: {
+      required: 'Email es obligatorio',
+      pattern: {
+        value:
+          /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+        message: 'Email debe ser válido',
+      },
+    },
+    password: {
+      required: 'Contraseña es obligatoria',
+      minLength: {
+        value: 8,
+        message: 'Contraseña debe tener al menos 8 caracteres',
+      },
+    },
+    repeatPassword: {
+      required: 'Contraseña es obligatoria',
+      minLength: {
+        value: 8,
+        message: 'Contraseña debe tener al menos 8 caracteres',
+      },
+    },
+  };
+
+  const validateForm = (password, repeatPassword) => {
+    if (password !== repeatPassword) {
+      Alert.alert(t('validations.passwordRepeat'));
+      return false;
+    } else return true;
   };
 
   const options = [
@@ -62,40 +101,86 @@ const RegisterScreen = ({ navigation }) => {
           />
         </View>
         <Text>{t('registerScreen.usernameTitle')}</Text>
-        <CustomInput
-          placeholder={t('registerScreen.usernameExample')}
-          autoFocus
-          type='text'
-          value={usuario}
-          onChangeText={(text) => setUsuario(text)}
+        <Controller
+          control={control}
+          rules={registerOptions.usuario}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder={t('registerScreen.usernameExample')}
+              autoFocus
+              type='text'
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name='usuario'
         />
+        {errors.usuario && (
+          <Text style={{ color: 'red' }}>{errors.usuario.message}</Text>
+        )}
         <Text>{t('registerScreen.emailTitle')}</Text>
-        <CustomInput
-          placeholder={t('registerScreen.emailExample')}
-          type='email'
-          value={email}
-          onChangeText={(text) => setEmail(text)}
+        <Controller
+          control={control}
+          rules={registerOptions.email}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder={t('registerScreen.emailExample')}
+              type='email'
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name='email'
         />
+        {errors.email && (
+          <Text style={{ color: 'red' }}>{errors.email.message}</Text>
+        )}
         <Text>{t('registerScreen.passwordTitle')}</Text>
-        <CustomInput
-          placeholder='********'
-          secureTextEntry
-          type='password'
-          value={password}
-          onChangeText={(text) => setPassword(text)}
+        <Controller
+          control={control}
+          rules={registerOptions.password}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder='********'
+              secureTextEntry
+              type='password'
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name='password'
         />
+        {errors.password && (
+          <Text style={{ color: 'red' }}>{errors.password.message}</Text>
+        )}
         <Text>{t('registerScreen.repeatPasswordTitle')}</Text>
-        <CustomInput
-          placeholder='********'
-          secureTextEntry
-          type='password'
-          value={repeatPassword}
-          onChangeText={(text) => setRepeatPassword(text)}
-          onSubmitEditing={signUp}
+        <Controller
+          control={control}
+          rules={registerOptions.repeatPassword}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder='********'
+              secureTextEntry
+              type='password'
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name='repeatPassword'
         />
+        {errors.repeatPassword && (
+          <Text style={{ color: 'red' }}>{errors.repeatPassword.message}</Text>
+        )}
       </View>
       <View style={{ height: 20 }} />
-      <CustomButton onPress={signUp} title={t('registerScreen.submitButton')} />
+      <CustomButton
+        onPress={handleSubmit(onSubmit)}
+        title={t('registerScreen.submitButton')}
+      />
       <View style={{ height: 20 }} />
       <Text style={{ fontFamily: 'rubik', fontSize: 16, marginVertical: 10 }}>
         {t('registerScreen.ctaLogin')}

@@ -15,25 +15,43 @@ import { Image } from 'react-native-elements';
 import { StatusBar } from 'expo-status-bar';
 import { t } from '../lang/IMLocalized';
 import { loginAction } from '../store/actions';
+import { useForm, Controller } from 'react-hook-form';
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const validateForm = () => {
-    if (!email || !password) {
-      alert(t('validations.emptyFields'));
-      return false;
-    }
-    return true;
+  const onSubmit = (data) => {
+    const { email, password } = data;
+    dispatch(loginAction(email, password));
   };
 
-  const signIn = async () => {
-    if (validateForm()) {
-      dispatch(loginAction(email, password));
-    }
+  const registerOptions = {
+    email: {
+      required: 'Email es obligatorio',
+      pattern: {
+        value:
+          /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+        message: 'Email debe ser válido',
+      },
+    },
+    password: {
+      required: 'Contraseña es obligatoria',
+      minLength: {
+        value: 8,
+        message: 'Contraseña debe tener al menos 8 caracteres',
+      },
+    },
   };
 
   return (
@@ -48,24 +66,48 @@ const LoginScreen = ({ navigation }) => {
       <Title>{t('loginScreen.loginTitle')}</Title>
       <View style={styles.inputContainer}>
         <Text>{t('loginScreen.emailTitle')}</Text>
-        <CustomInput
-          placeholder={t('loginScreen.emailExample')}
-          autoFocus
-          type='email'
-          value={email}
-          onChangeText={(text) => setEmail(text)}
+        <Controller
+          control={control}
+          rules={registerOptions.email}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder={t('loginScreen.emailExample')}
+              autoFocus
+              type='email'
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name='email'
         />
+        {errors.email && (
+          <Text style={{ color: 'red' }}>{errors.email.message}</Text>
+        )}
         <Text>{t('loginScreen.passwordTitle')}</Text>
-        <CustomInput
-          placeholder='********'
-          secureTextEntry
-          type='password'
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          onSubmitEditing={signIn}
+        <Controller
+          control={control}
+          rules={registerOptions.password}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomInput
+              placeholder='********'
+              secureTextEntry
+              type='password'
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name='password'
         />
+        {errors.password && (
+          <Text style={{ color: 'red' }}>{errors.password.message}</Text>
+        )}
       </View>
-      <CustomButton onPress={signIn} title={t('loginScreen.submitButton')} />
+      <CustomButton
+        onPress={handleSubmit(onSubmit)}
+        title={t('loginScreen.submitButton')}
+      />
       <Text style={{ fontFamily: 'rubik', fontSize: 16, marginVertical: 10 }}>
         {t('loginScreen.ctaRegister')}
       </Text>
