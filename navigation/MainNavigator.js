@@ -19,6 +19,9 @@ import ProfileScreen, {
 import EditProfileScreen, {
   screenOptions as editProfileScreenOptions,
 } from '../screens/EditProfileScreen';
+import UserScreen, {
+  screenOptions as userScreenOptions,
+} from '../screens/UserScreen';
 import CreatePostScreen, {
   screenOptions as createPostScreenOptions,
 } from '../screens/CreatePostScreen';
@@ -109,6 +112,11 @@ export const ProfileNavigator = () => {
         component={EditProfileScreen}
         options={editProfileScreenOptions}
       />
+      <ProfileStackNavigator.Screen
+        name='User'
+        component={UserScreen}
+        options={userScreenOptions}
+      />
     </ProfileStackNavigator.Navigator>
   );
 };
@@ -122,6 +130,11 @@ export const SearchNavigator = () => {
         name='Search'
         component={SearchScreen}
         options={searchScreenOptions}
+      />
+      <SearchStackNavigator.Screen
+        name='User'
+        component={UserScreen}
+        options={userScreenOptions}
       />
     </SearchStackNavigator.Navigator>
   );
@@ -185,6 +198,11 @@ export const BandsNavigator = () => {
         name='EditBand'
         component={EditBandScreen}
         options={editBandScreenOptions}
+      />
+      <BandsStackNavigator.Screen
+        name='User'
+        component={UserScreen}
+        options={userScreenOptions}
       />
     </BandsStackNavigator.Navigator>
   );

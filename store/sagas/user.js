@@ -36,9 +36,24 @@ function* editUser(action) {
   }
 }
 
+function* updateFans(action) {
+  try {
+    const { uid, data } = action;
+    const response = yield call(
+      axios.put,
+      `${API_BASE_PATH}/users/${uid}/fans?uid=${uid}`,
+      action.data
+    );
+  } catch (error) {
+    if (error.response.data.message) Alert.alert(error.response.data.message);
+    else Alert.alert(`ERROR: ${error.message}`);
+  }
+}
+
 export function* userSaga() {
   yield all([
     takeLatest(UserActionTypes.GET_USER, getUser),
     takeLatest(UserActionTypes.EDIT_USER, editUser),
+    takeLatest(UserActionTypes.UPDATE_FANS, updateFans),
   ]);
 }

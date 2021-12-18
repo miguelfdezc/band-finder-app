@@ -8,14 +8,15 @@ import {
   getUserAction,
 } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { SimpleLineIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import NavBar from '../components/NavBar';
 import Colors from '../constants/Colors';
 import { useIsFocused } from '@react-navigation/native';
 import Post from '../components/UI/Post';
 import Event from '../components/UI/Event';
 
-const ProfileScreen = (props) => {
+const UserScreen = ({ route, navigation }) => {
+  const { id } = route.params;
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
@@ -26,16 +27,16 @@ const ProfileScreen = (props) => {
   const [isCurrentUser, setIsCurrentUser] = useState(false);
 
   useEffect(() => {
-    if (isFocused) dispatch(getUserAction(authUser.uid));
-  }, [props, isFocused]);
+    if (isFocused) dispatch(getUserAction(id));
+  }, [isFocused]);
 
   useEffect(() => {
     setIsCurrentUser(currentUser && Object.keys(currentUser).length !== 0);
     if (currentUser && Object.keys(currentUser).length !== 0) {
       dispatch(
         currentUser.customClaims.type === 'musicos'
-          ? getPostsUserAction(authUser.uid)
-          : getEventsUserAction(authUser.uid, authUser.uid)
+          ? getPostsUserAction(id)
+          : getEventsUserAction(id, id)
       );
     }
   }, [currentUser]);
@@ -121,13 +122,10 @@ const ProfileScreen = (props) => {
   );
 };
 
-export default ProfileScreen;
+export default UserScreen;
 
 export const screenOptions = (navData) =>
-  NavBar(navData, true, 'Edit', 'pencil', SimpleLineIcons, () => {
-    navData.navigation.navigate('EditProfile');
-  });
-
+  NavBar(navData, true, 'Follow', `person-outline`, Ionicons, () => {});
 const styles = StyleSheet.create({
   container: {
     top: 85,
