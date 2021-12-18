@@ -33,6 +33,8 @@ export const postReducer = (state = PostDefaultState(), action) => {
         return value;
       });
       return { ...state, publicaciones, publicacion: action.data };
+    case PostActionTypes.GET_POSTS_FOLLOWED_SUCCESS:
+      return { ...state, publicacionesSeguidos: action.data };
     default:
       return state;
   }

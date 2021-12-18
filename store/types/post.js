@@ -12,6 +12,8 @@ export const PostActionTypes = {
   GET_POST_SUCCESS: 'GET_POST_SUCCESS',
   EDIT_POST: 'EDIT_POST',
   EDIT_POST_SUCCESS: 'EDIT_POST_SUCCESS',
+  GET_POSTS_FOLLOWED: 'GET_POSTS_FOLLOWED',
+  GET_POSTS_FOLLOWED_SUCCESS: 'GET_POSTS_FOLLOWED_SUCCESS',
 };
 
 export const PostDefaultState = () => ({
@@ -25,4 +27,5 @@ export const PostDefaultState = () => ({
     likes: [],
     comentarios: [],
   },
+  publicacionesSeguidos: [],
 });

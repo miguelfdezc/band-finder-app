@@ -38,6 +38,11 @@ export const editPostAction = (id, data) => ({
   data,
 });
 
+export const getPostsFollowedAction = (uid) => ({
+  type: PostActionTypes.GET_POSTS_FOLLOWED,
+  uid,
+});
+
 export const getPostsUserActionSuccess = (data) => ({
   type: PostActionTypes.GET_POSTS_SUCCESS,
   data,
@@ -65,5 +70,10 @@ export const getPostActionSuccess = (data) => ({
 
 export const editPostActionSuccess = (data) => ({
   type: PostActionTypes.EDIT_POST_SUCCESS,
+  data,
+});
+
+export const getPostsFollowedActionSuccess = (data) => ({
+  type: PostActionTypes.GET_POSTS_FOLLOWED_SUCCESS,
   data,
 });

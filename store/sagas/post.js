@@ -6,6 +6,7 @@ import {
   getPostsUserActionSuccess,
   updateLikesActionSuccess,
   updateSharedActionSuccess,
+  getPostsFollowedActionSuccess,
 } from '../actions';
 import { PostActionTypes } from '../types/post';
 import * as RootNavigation from '../../navigation/RootNavigation';
@@ -104,6 +105,20 @@ function* editPost(action) {
   }
 }
 
+function* getPostsFollowed(action) {
+  try {
+    const { uid } = action;
+    const response = yield call(
+      axios.get,
+      `${API_BASE_PATH}/posts/user/${uid}/followed?uid=${uid}`
+    );
+    yield put(getPostsFollowedActionSuccess(response.data.posts));
+  } catch (error) {
+    if (error.response.data.message) Alert.alert(error.response.data.message);
+    else Alert.alert(`ERROR: ${error.message}`);
+  }
+}
+
 export function* postSaga() {
   yield all([
     takeLatest(PostActionTypes.GET_POSTS, getPostsUser),
@@ -113,5 +128,6 @@ export function* postSaga() {
     takeLatest(PostActionTypes.CREATE_POST, createPost),
     takeLatest(PostActionTypes.GET_POST, getPost),
     takeLatest(PostActionTypes.EDIT_POST, editPost),
+    takeLatest(PostActionTypes.GET_POSTS_FOLLOWED, getPostsFollowed),
   ]);
 }
