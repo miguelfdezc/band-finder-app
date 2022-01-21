@@ -36,7 +36,7 @@ const EditProfileScreen = ({ navigation }) => {
 
   const currentUser = useSelector((state) => state.user.currentUser);
   const [editUser, setEditUser] = useState({
-    photoURL: '',
+    imagenPerfil: '',
     imagenFondo: '',
     usuario: '',
     displayName: '',
@@ -95,7 +95,7 @@ const EditProfileScreen = ({ navigation }) => {
     }
 
     setEditUser({
-      photoURL: currentUser.photoURL,
+      imagenPerfil: currentUser.imagenPerfil,
       imagenFondo: currentUser.imagenFondo,
       usuario: currentUser.usuario,
       displayName: currentUser.displayName,
@@ -133,7 +133,7 @@ const EditProfileScreen = ({ navigation }) => {
     const remoteURL = await snapshot.ref.getDownloadURL();
 
     if (tipo === 'profileImg')
-      setEditUser({ ...editUser, photoURL: remoteURL });
+      setEditUser({ ...editUser, imagenPerfil: remoteURL });
     else if (tipo === 'backgroundImg')
       setEditUser({ ...editUser, imagenFondo: remoteURL });
 
@@ -146,9 +146,9 @@ const EditProfileScreen = ({ navigation }) => {
         <Title>{t('editProfileScreen.title')}</Title>
       </View>
       <View style={styles.profileImgContainer}>
-        {!!editUser.photoURL && (
+        {!!editUser.imagenPerfil && (
           <Image
-            source={{ uri: editUser.photoURL ?? currentUser.photoURL }}
+            source={{ uri: editUser.imagenPerfil ?? currentUser.imagenPerfil }}
             style={styles.profileImg}
           />
         )}

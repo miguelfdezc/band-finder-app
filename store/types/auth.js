@@ -8,7 +8,7 @@ export const AuthActionTypes = {
 
 export const AuthDefaultState = () => ({
   authUser: {
-    uid: '1Qw0Nr34SERXZVQmarYX6D2Ow2r2', // Músic@
-    // uid: 'EVpPrpQ3jMfeVQbMhhEft0eyzGD2', // Negocio
+    // uid: '1Qw0Nr34SERXZVQmarYX6D2Ow2r2', // Músic@
+    uid: 'EVpPrpQ3jMfeVQbMhhEft0eyzGD2', // Negocio
   },
 });

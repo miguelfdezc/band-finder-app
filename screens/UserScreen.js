@@ -53,9 +53,9 @@ const UserScreen = ({ route, navigation }) => {
           )}
           <View style={styles.container}>
             <View style={styles.profileImgContainer}>
-              {!!currentUser.photoURL && (
+              {!!currentUser.imagenPerfil && (
                 <Image
-                  source={{ uri: currentUser.photoURL }}
+                  source={{ uri: currentUser.imagenPerfil }}
                   style={styles.profileImg}
                 />
               )}

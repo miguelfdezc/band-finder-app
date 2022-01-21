@@ -127,7 +127,7 @@ const Event = ({ data }) => {
           )}
         </View>
         <Text style={styles.dateTime}>
-          {moment(fechaInicio).format('DD')} {moment(fechaInicio).format('MMM')}
+          {moment(fechaInicio).format('DD')} {moment(fechaInicio).format('MMM')}{' '}
           {moment(horaInicio).format('HH:mm')}
         </Text>
         <Text numberOfLines={2} ellipsizeMode='tail' style={styles.description}>

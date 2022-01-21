@@ -4,6 +4,7 @@ import { t } from '../lang/IMLocalized';
 import {
   getEventAction,
   getEventsSubscribedAction,
+  getUserAction,
   updateSubscribedAction,
 } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -50,6 +51,7 @@ const EventScreen = (props) => {
       default:
         break;
     }
+    if (event.usuario) dispatch(getUserAction(event.usuario));
   }, [event]);
 
   useEffect(() => {
@@ -58,23 +60,30 @@ const EventScreen = (props) => {
 
   return (
     <ScrollView style={{ margin: 0, backgroundColor: 'white', height: '100%' }}>
-      {!!event.imagenFondo && (
+      {!!currentUser.imagenFondo && (
         <Image
-          source={{ uri: event.imagenFondo }}
+          source={{ uri: currentUser.imagenFondo }}
           style={styles.backgroundImg}
         />
       )}
       <View style={styles.container}>
         <View style={styles.profileImgContainer}>
-          {!!event.photoURL && (
-            <Image source={{ uri: event.photoURL }} style={styles.profileImg} />
+          {!!currentUser.imagenPerfil && (
+            <Image
+              source={{ uri: currentUser.imagenPerfil }}
+              style={styles.profileImg}
+            />
           )}
         </View>
-        <View style={styles.title}>
-          <Text style={{ fontSize: 24 }}>{event.nombre}</Text>
-        </View>
+        {!!currentUser.displayName && currentUser.displayName.length > 0 && (
+          <View style={styles.title}>
+            <Text style={{ fontSize: 24 }}>{currentUser.displayName}</Text>
+          </View>
+        )}
         <View style={styles.info}>
-          <Text style={styles.infoText}>{event.ubicacionNegocio}</Text>
+          {!!currentUser.ubicacion && currentUser.ubicacion.length > 0 && (
+            <Text style={styles.infoText}>{currentUser.ubicacion}</Text>
+          )}
           <Text style={styles.infoText}>{event.ubicacion}</Text>
         </View>
         <View style={styles.event}>

@@ -40,12 +40,14 @@ const EventsScreen = (props) => {
 export default EventsScreen;
 
 export const screenOptions = (navData) => {
-  const currentUser = useSelector((state) => state.user.currentUser);
-  return currentUser.customClaims.type === 'negocios'
-    ? NavBar(navData, true, 'Add', 'add', Ionicons, () => {
-        navData.navigation.navigate('CreateEvent');
-      })
-    : NavBar(navData, true, 'Events', 'calendar-outline', Ionicons, () => {});
+  // const currentUser = useSelector((state) => state.user.currentUser);
+  return NavBar(navData, true, 'Add', 'add', Ionicons, () => {
+    navData.navigation.navigate('CreateEvent');
+  });
+  /* currentUser.customClaims.type === 'negocios'
+    ?  */
+  //}); /*
+  //: NavBar(navData, true, 'Events', 'calendar-outline', Ionicons, () => {}); */
 };
 
 const styles = StyleSheet.create({

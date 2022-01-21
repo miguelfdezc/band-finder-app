@@ -16,6 +16,7 @@ const Musician = ({ data, navigation }) => {
   let {
     actuaciones,
     descripcion,
+    imagenPerfil,
     imagenFondo,
     objectID,
     ubicacion,
@@ -30,8 +31,8 @@ const Musician = ({ data, navigation }) => {
 
   return (
     <View style={styles.container}>
-      {imagenFondo !== '' ? (
-        <Image source={{ uri: currentUser.photoURL }} style={styles.image} />
+      {imagenPerfil !== '' ? (
+        <Image source={{ uri: imagenPerfil }} style={styles.image} />
       ) : (
         <TouchableOpacity style={styles.image}></TouchableOpacity>
       )}

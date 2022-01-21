@@ -20,7 +20,7 @@ export const UserDefaultState = () => ({
     fans: [],
     seguidos: [],
     imagenFondo: '',
-    photoURL: 'https://image.flaticon.com/icons/png/512/848/848043.png',
+    imagenPerfil: 'https://image.flaticon.com/icons/png/512/848/848043.png',
     tokensValidAfterTime: '',
     ubicacion: '',
     uid: '',

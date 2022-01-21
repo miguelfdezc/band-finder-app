@@ -9,11 +9,14 @@ import {
 } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
-import NavBar from '../components/NavBar';
-import Colors from '../constants/Colors';
 import { useIsFocused } from '@react-navigation/native';
 import Post from '../components/UI/Post';
 import Event from '../components/UI/Event';
+import NavBar from '../components/NavBar';
+import Colors from '../constants/Colors';
+import * as Localization from 'expo-localization';
+import * as instruments_en from '../assets/data/instruments_en.json';
+import * as instruments_es from '../assets/data/instruments_es.json';
 
 const ProfileScreen = (props) => {
   const dispatch = useDispatch();
@@ -24,6 +27,17 @@ const ProfileScreen = (props) => {
   const posts = useSelector((state) => state.post.publicaciones);
   const events = useSelector((state) => state.event.eventosUsuario);
   const [isCurrentUser, setIsCurrentUser] = useState(false);
+
+  const [allInstruments, setAllInstruments] = useState([]);
+
+  useEffect(() => {
+    const locale = Localization.locale.substring(0, 2);
+    if (locale === 'en') {
+      setAllInstruments(instruments_en.instruments);
+    } else if (locale === 'es') {
+      setAllInstruments(instruments_es.instruments);
+    }
+  }, []);
 
   useEffect(() => {
     if (isFocused) dispatch(getUserAction(authUser.uid));
@@ -52,9 +66,9 @@ const ProfileScreen = (props) => {
           )}
           <View style={styles.container}>
             <View style={styles.profileImgContainer}>
-              {!!currentUser.photoURL && (
+              {!!currentUser.imagenPerfil && (
                 <Image
-                  source={{ uri: currentUser.photoURL }}
+                  source={{ uri: currentUser.imagenPerfil }}
                   style={styles.profileImg}
                 />
               )}
@@ -84,6 +98,47 @@ const ProfileScreen = (props) => {
                 ? currentUser.descripcion
                 : t('profileScreen.descriptionExample')}
             </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: 360,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginLeft: 10,
+                marginBottom: 20,
+              }}
+            >
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                data={currentUser.instrumentos}
+                horizontal
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                  <View>
+                    <Text
+                      style={{
+                        borderColor: '#F0E5F1',
+                        borderRadius: 50,
+                        backgroundColor: '#F5F4F6',
+                        paddingHorizontal: 2,
+                        minWidth: 50,
+                        fontSize: 14,
+                        height: 32,
+                        textAlign: 'center',
+                        lineHeight: 32,
+                        marginHorizontal: 5,
+                      }}
+                    >
+                      {
+                        allInstruments.find(
+                          (value) => value.key === item.nombre
+                        ).title
+                      }
+                    </Text>
+                  </View>
+                )}
+              />
+            </View>
             <View style={styles.profileOptions}>
               <View style={styles.selectedOption}>
                 <Text>
