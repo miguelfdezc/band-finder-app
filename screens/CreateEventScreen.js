@@ -23,6 +23,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { storage } from '../config';
 import moment from 'moment';
 import { createEventAction } from '../store/actions';
+import { useForm, Controller } from 'react-hook-form';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
@@ -46,6 +47,46 @@ const CreateEventScreen = ({ navigation }) => {
   const [showInitHour, setShowInitHour] = useState(false);
   const [showEndDate, setShowEndDate] = useState(false);
   const [showEndHour, setShowEndHour] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      titulo: '',
+      ubicacion: '',
+      descripcion: '',
+    },
+  });
+
+  const onSubmit = (data) => {
+    const { titulo, ubicacion, descripcion } = data;
+    dispatch(createEventAction({ ...event, titulo, ubicacion, descripcion }));
+  };
+
+  const registerOptions = {
+    titulo: {
+      required: 'Título es obligatorio',
+      maxLength: {
+        value: 30,
+        message: 'Título debe tener como máximo 30 caracteres',
+      },
+    },
+    ubicacion: {
+      required: 'Ubicación es obligatorio',
+      maxLength: {
+        value: 50,
+        message: 'Ubicación debe tener como máximo 50 caracteres',
+      },
+    },
+    descripcion: {
+      maxLength: {
+        value: 150,
+        message: 'Descripción debe tener como máximo 150 caracteres',
+      },
+    },
+  };
 
   useEffect(() => {
     setEvent({
@@ -125,21 +166,43 @@ const CreateEventScreen = ({ navigation }) => {
         </View>
         <View>
           <Text>{t('createEventScreen.titleTitle')}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={t('createEventScreen.titleExample')}
-            value={event.titulo}
-            onChangeText={(text) => setEvent({ ...event, titulo: text })}
+          <Controller
+            control={control}
+            rules={registerOptions.titulo}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder={t('createEventScreen.titleExample')}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name='titulo'
           />
+          {errors.titulo && (
+            <Text style={{ color: 'red' }}>{errors.titulo.message}</Text>
+          )}
         </View>
         <View>
           <Text>{t('createEventScreen.locationTitle')}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder={t('createEventScreen.locationExample')}
-            value={event.ubicacion}
-            onChangeText={(text) => setEvent({ ...event, ubicacion: text })}
+          <Controller
+            control={control}
+            rules={registerOptions.ubicacion}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder={t('createEventScreen.locationExample')}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name='ubicacion'
           />
+          {errors.ubicacion && (
+            <Text style={{ color: 'red' }}>{errors.ubicacion.message}</Text>
+          )}
         </View>
         <View>
           <Text style={{ marginLeft: 10 }}>
@@ -247,14 +310,25 @@ const CreateEventScreen = ({ navigation }) => {
         </View>
         <View>
           <Text>{t('createEventScreen.descriptionTitle')}</Text>
-          <TextInput
-            style={styles.textArea}
-            multiline={true}
-            numberOfLines={4}
-            placeholder={t('createEventScreen.descriptionExample')}
-            value={event.descripcion}
-            onChangeText={(text) => setEvent({ ...event, descripcion: text })}
+          <Controller
+            control={control}
+            rules={registerOptions.descripcion}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.textArea}
+                multiline={true}
+                numberOfLines={4}
+                placeholder={t('createEventScreen.descriptionExample')}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name='descripcion'
           />
+          {errors.descripcion && (
+            <Text style={{ color: 'red' }}>{errors.descripcion.message}</Text>
+          )}
         </View>
       </View>
 
@@ -263,7 +337,7 @@ const CreateEventScreen = ({ navigation }) => {
           <Text style={styles.blueText}>{t('globals.cancelBtn')}</Text>
         </TouchableOpacity>
         <CustomButton
-          onPress={() => dispatch(createEventAction(event))}
+          onPress={handleSubmit(onSubmit)}
           title={t('globals.createBtn')}
         />
       </View>

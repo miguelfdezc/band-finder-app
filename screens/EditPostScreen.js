@@ -18,6 +18,7 @@ import Colors from '../constants/Colors';
 import CustomButton from '../components/Button';
 import * as ImagePicker from 'expo-image-picker';
 import { storage } from '../config';
+import { useForm, Controller } from 'react-hook-form';
 
 import { LogBox } from 'react-native';
 import { editPostAction, getPostAction } from '../store/actions';
@@ -45,6 +46,31 @@ const EditPostScreen = ({ route, navigation }) => {
     dispatch(getPostAction(id));
   }, []);
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    defaultValues: {
+      descripcion: editPost.descripcion,
+    },
+  });
+
+  const onSubmit = (data) => {
+    const { descripcion } = data;
+    dispatch(editPostAction(id, { ...post, descripcion }));
+  };
+
+  const registerOptions = {
+    descripcion: {
+      maxLength: {
+        value: 150,
+        message: 'Descripción debe tener como máximo 150 caracteres',
+      },
+    },
+  };
+
   useEffect(() => {
     setPost({
       usuario: editPost.usuario,
@@ -53,6 +79,10 @@ const EditPostScreen = ({ route, navigation }) => {
       descripcion: editPost.descripcion,
     });
   }, [editPost]);
+
+  useEffect(() => {
+    if (post.descripcion) setValue('descripcion', post.descripcion);
+  }, [post]);
 
   const uploadFile = async (tipo) => {
     const pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -144,14 +174,25 @@ const EditPostScreen = ({ route, navigation }) => {
         )}
         <View>
           <Text>{t('editPostScreen.descriptionTitle')}</Text>
-          <TextInput
-            style={styles.textArea}
-            multiline={true}
-            numberOfLines={4}
-            placeholder={t('editPostScreen.descriptionExample')}
-            value={post.descripcion}
-            onChangeText={(text) => setPost({ ...post, descripcion: text })}
+          <Controller
+            control={control}
+            rules={registerOptions.descripcion}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                style={styles.textArea}
+                multiline={true}
+                numberOfLines={4}
+                placeholder={t('createPostScreen.descriptionExample')}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+            name='descripcion'
           />
+          {errors.descripcion && (
+            <Text style={{ color: 'red' }}>{errors.descripcion.message}</Text>
+          )}
         </View>
       </View>
 
@@ -160,7 +201,7 @@ const EditPostScreen = ({ route, navigation }) => {
           <Text style={styles.blueText}>{t('globals.cancelBtn')}</Text>
         </TouchableOpacity>
         <CustomButton
-          onPress={() => dispatch(editPostAction(id, post))}
+          onPress={handleSubmit(onSubmit)}
           title={t('globals.saveBtn')}
         />
       </View>
